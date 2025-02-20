@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://4wvwyli1pm5a"]
+
+[ext_resource type="Script" path="res://Player/player.gd" id="1_4s51k"]
+[ext_resource type="Script" path="res://State Machine/state_machine.gd" id="2_t4gjq"]
+[ext_resource type="Script" path="res://Player/player_grounded.gd" id="3_7auwm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_r25e2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4lit3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u1kto"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_4s51k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_r25e2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4lit3")
+
+[node name="CameraTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.99961, -0.0279216, 0, 0.0279216, 0.99961, 0, 1, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraTarget"]
+shape = SubResource("SphereShape3D_u1kto")
+spring_length = 5.5
+
+[node name="Camera3D" type="Camera3D" parent="CameraTarget/SpringArm3D"]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_t4gjq")
+
+[node name="Grounded" type="Node" parent="StateMachine"]
+script = ExtResource("3_7auwm")

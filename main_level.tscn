@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2rafyygm1l4k"]
+
+[ext_resource type="PackedScene" uid="uid://4wvwyli1pm5a" path="res://Player/player.tscn" id="1_614a4"]
+[ext_resource type="Texture2D" uid="uid://bbk5x2e0bkvji" path="res://checker_black_512x512.png" id="1_jsl4u"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ln7vp"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_s0e3t"]
+sky_material = SubResource("ProceduralSkyMaterial_ln7vp")
+
+[sub_resource type="Environment" id="Environment_04o2j"]
+background_mode = 2
+sky = SubResource("Sky_s0e3t")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxn8s"]
+albedo_texture = ExtResource("1_jsl4u")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cg5as"]
+albedo_texture = ExtResource("1_jsl4u")
+uv1_triplanar = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_04o2j")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.755853, -0.438107, 0.486567, 0, 0.743145, 0.669131, -0.654741, 0.505765, -0.561709, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_614a4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92146, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_mask = 0
+
+[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -0.5, 0)
+material = SubResource("StandardMaterial3D_lxn8s")
+
+[node name="Ramp60" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, -9)
+polygon = PackedVector2Array(0, 0, 0, 0.866, 0.5, 0)
+material = SubResource("StandardMaterial3D_cg5as")
+
+[node name="Ramp45" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, 1)
+polygon = PackedVector2Array(0, 0, 0, 0.707, 0.707, 0)
+material = SubResource("StandardMaterial3D_cg5as")
+
+[node name="Ramp30" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, 11)
+polygon = PackedVector2Array(0, 0, 0, 0.5, 0.866, 0)
+material = SubResource("StandardMaterial3D_cg5as")
