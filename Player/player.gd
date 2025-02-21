@@ -27,42 +27,6 @@ func _physics_process(delta):
 	
 	camera_target.rotation.y -= camera_input_direction.x * delta
 	
-	var input_direction = Vector2.ZERO
-	var target_horizontasl_velocity = Vector3.ZERO
-	
-	if Input.is_action_pressed("move_right"):
-		input_direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		input_direction.x -= 1
-	if Input.is_action_pressed("move_back"):
-		input_direction.y += 1
-	if Input.is_action_pressed("move_forward"):
-		input_direction.y -= 1
-	
-	input_direction = input_direction.normalized()
-	target_horizontasl_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
-	target_horizontasl_velocity.y = 0
-	target_horizontasl_velocity = target_horizontasl_velocity.normalized() * max_walk_speed
-	
-	#Horizontal velocity
-	var horizontal_velocity := Vector3.ZERO
-	if is_on_floor():
-		# velocity = velocity.lerp(target, H\_acc \* delta) 
-		horizontal_velocity = velocity.lerp(target_horizontasl_velocity, walk_acceleration * delta)
-	else:
-		horizontal_velocity = velocity
-		horizontal_velocity.y = 0
-	
-	# Vertical Velocity
-	var vertical_velocity := 0.0
-	if is_on_floor() and Input.is_action_pressed("jump"):
-		vertical_velocity = 10.0
-	else:
-		vertical_velocity = velocity.y + -(fall_acceleration * delta)
-		vertical_velocity = clamp(vertical_velocity, -max_fall_speed, max_fall_speed)
-	
-	velocity = Vector3(horizontal_velocity.x, vertical_velocity, horizontal_velocity.z)
-	
 	move_and_slide()
 	
 	camera_input_direction = Vector2.ZERO

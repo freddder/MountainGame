@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://4wvwyli1pm5a"]
+[gd_scene load_steps=8 format=3 uid="uid://4wvwyli1pm5a"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_4s51k"]
 [ext_resource type="Script" path="res://State Machine/state_machine.gd" id="2_t4gjq"]
 [ext_resource type="Script" path="res://Player/player_grounded.gd" id="3_7auwm"]
+[ext_resource type="Script" path="res://Player/player_airborne.gd" id="4_plo77"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_r25e2"]
 
@@ -28,8 +29,12 @@ spring_length = 5.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraTarget/SpringArm3D"]
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_t4gjq")
+initial_state = NodePath("Airborne")
 
 [node name="Grounded" type="Node" parent="StateMachine"]
 script = ExtResource("3_7auwm")
+
+[node name="Airborne" type="Node" parent="StateMachine"]
+script = ExtResource("4_plo77")

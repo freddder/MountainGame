@@ -12,15 +12,14 @@ func _ready():
 			child.ChangeState.connect(transition_to_state)
 	
 	if initial_state:
+		current_state = initial_state
 		initial_state.enter()
 
 func _process(delta):
-	return
 	if current_state:
 		current_state.update(delta)
 
 func _physics_process(delta):
-	return
 	if current_state:
 		current_state.physics_update(delta)
 
