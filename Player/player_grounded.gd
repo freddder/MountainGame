@@ -22,20 +22,11 @@ func physics_update(delta: float):
 		ChangeState.emit("airborne")
 		return
 	
-	var input_direction = Vector2.ZERO
-	var target_horizontasl_velocity = Vector3.ZERO
+	if body.get_touching_wall():
+		ChangeState.emit("climb")
 	
-	if Input.is_action_pressed("move_right"):
-		input_direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		input_direction.x -= 1
-	if Input.is_action_pressed("move_back"):
-		input_direction.y += 1
-	if Input.is_action_pressed("move_forward"):
-		input_direction.y -= 1
-	
-	input_direction = input_direction.normalized()
-	target_horizontasl_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
+	var input_direction = body.get_input_dir()
+	var target_horizontasl_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
 	target_horizontasl_velocity.y = 0
 	target_horizontasl_velocity = target_horizontasl_velocity.normalized() * max_walk_speed
 	

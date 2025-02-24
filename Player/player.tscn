@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://4wvwyli1pm5a"]
+[gd_scene load_steps=10 format=3 uid="uid://4wvwyli1pm5a"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_4s51k"]
 [ext_resource type="Script" path="res://State Machine/state_machine.gd" id="2_t4gjq"]
 [ext_resource type="Script" path="res://Player/player_grounded.gd" id="3_7auwm"]
 [ext_resource type="Script" path="res://Player/player_airborne.gd" id="4_plo77"]
+[ext_resource type="Script" path="res://Player/player_climb.gd" id="5_fvhre"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_r25e2"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_8a52o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4lit3"]
 
@@ -14,8 +17,16 @@
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_4s51k")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
 mesh = SubResource("CapsuleMesh_r25e2")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.57242e-09, 0, 0.617955, -0.460826)
+mesh = SubResource("PrismMesh_8a52o")
+skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4lit3")
@@ -38,3 +49,6 @@ script = ExtResource("3_7auwm")
 
 [node name="Airborne" type="Node" parent="StateMachine"]
 script = ExtResource("4_plo77")
+
+[node name="Climb" type="Node" parent="StateMachine"]
+script = ExtResource("5_fvhre")
