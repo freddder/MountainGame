@@ -28,6 +28,14 @@ transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.572
 mesh = SubResource("PrismMesh_8a52o")
 skeleton = NodePath("../..")
 
+[node name="WallCheck" type="RayCast3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.709849, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="WallTopCheck" type="RayCast3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.189604, 0)
+target_position = Vector3(0, 0, -1)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_4lit3")
 

@@ -5,10 +5,12 @@ class_name PlayerAirborne
 @export var fall_acceleration: float = 45.0
 @export var max_fall_speed: float = 75.0
 
-@onready var body: CharacterBody3D = $"../.."
+@onready var body: Player = $"../.."
+@onready var mesh: Node3D = $"../../Mesh"
+@onready var wall_check: RayCast3D = $"../../Mesh/WallCheck"
 
 func enter():
-	print("air")
+	pass
 
 func exit():
 	pass
@@ -21,7 +23,8 @@ func physics_update(delta: float):
 		ChangeState.emit("grounded")
 		return
 	
-	if body.is_on_wall() and body.velocity.y < 0.0:
+	var collision = body.get_best_wall_collision()
+	if collision and body.velocity.y < 0.0:
 		ChangeState.emit("climb")
 		return
 	
@@ -30,4 +33,7 @@ func physics_update(delta: float):
 	vertical_velocity = clamp(vertical_velocity, -max_fall_speed, max_fall_speed)
 	
 	body.velocity.y = vertical_velocity
-	body.get_touching_wall()
+	
+	#var look_pos = body.global_position + body.velocity
+	#look_pos.y = body.global_position.y
+	#mesh.look_at(look_pos)
