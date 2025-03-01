@@ -79,9 +79,8 @@ func get_best_wall_collision() -> KinematicCollision3D:
 		var input_dir = get_input_dir()
 		var target_horizontal = camera_target.transform.basis.z * input_dir.y + camera_target.transform.basis.x * input_dir.x
 		target_horizontal.y = 0
-		var dot = target_horizontal.normalized().dot(-collision.get_normal().normalized()) # wrong as hell
-		if dot > highest_dot:
+		var dot = target_horizontal.normalized().dot(-collision.get_normal().normalized())
+		if dot > 0.7 and dot > highest_dot: # TODO: make 0.7 a variable in degrees
 			highest_dot = dot
 			best_collision = collision
-	
 	return best_collision

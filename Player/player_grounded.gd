@@ -28,9 +28,6 @@ func physics_update(delta: float):
 		return
 	
 	var collision = body.get_best_wall_collision()
-	if !body.is_on_floor() and collision and body.velocity.y < 0.0:
-		ChangeState.emit("climb")
-		return
 	
 	var input_direction = body.get_input_dir()
 	var target_horizontal_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
