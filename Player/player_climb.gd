@@ -9,14 +9,15 @@ var is_jumping : bool = false
 
 @onready var body: Player = $"../.."
 @onready var mesh: Node3D = $"../../Mesh"
-@onready var wall_check: RayCast3D = $"../../Mesh/WallCheck"
-@onready var wall_top_check: RayCast3D = $"../../Mesh/WallTopCheck"
+@onready var collision_shape: CollisionShape3D = $"../../CollisionShape3D"
+@onready var debug_sphere = $"../../Mesh/DebugSphere"
 
 func enter():
 	body.velocity = Vector3.ZERO
 
 func exit():
 	is_jumping = false
+	debug_sphere.global_position = body.global_position
 
 func update(delta: float):
 	pass
@@ -26,18 +27,16 @@ func physics_update(delta: float):
 		ChangeState.emit("grounded")
 		return
 	
-	if !wall_check.is_colliding():
+	var normal = body.get_average_wall_checks_normal()
+	if normal == Vector3.ZERO:
 		ChangeState.emit("airborne")
 		return
-	
-	body.get_best_wall_collision()
 	
 	# Movement
 	var input : Vector2 = body.get_input_dir()
 	if Input.is_action_pressed("jump") and !is_jumping:
 		if input.y > 0.0: # Jump away from wall
 			is_jumping = true
-			var normal = wall_check.get_collision_normal()
 			var jump_horizontal_dir = Vector2(normal.x, normal.z).normalized()
 			var jump_dir = Vector3(jump_horizontal_dir.x, 1.0, jump_horizontal_dir.y) * jump_force
 			body.velocity = jump_dir
@@ -48,17 +47,20 @@ func physics_update(delta: float):
 			pass # TODO: regular jumping
 		return
 	
-	if wall_check.is_colliding() and !wall_top_check.is_colliding():
-		pass # TODO: jump over edge
+	#if wall_check.is_colliding() and !wall_top_check.is_colliding():
+	#	pass
 	
-	var normal = (wall_check.get_collision_normal() + wall_top_check.get_collision_normal()) / 2.0
 	if input != Vector2.ZERO:
-		var rot = -(atan2(normal.z, normal.x) - PI/2)
-		var climb_dir = Vector3(input.x, -input.y, 0.0).rotated(Vector3.UP, rot).normalized()
-		body.velocity = climb_dir * climb_speed - normal * 0.5
-		body.velocity += -normal.normalized() * 0.5
+		var wall_right = Vector3.UP.cross(normal).normalized() # Right direction relative to the wall
+		var wall_up = normal.cross(wall_right).normalized() # Up direction along the wall
+		var climb_dir = (wall_right * input.x + wall_up * -input.y).normalized()
+		body.velocity = climb_dir * climb_speed
+		body.velocity += -normal.normalized()
+		
+		var look_pos = body.global_position - normal
+		mesh.look_at(look_pos)
+		collision_shape.look_at(look_pos)
 	else:
-		body.velocity = -normal.normalized() * 0.5
+		body.velocity = Vector3.ZERO
 	
-	var look_pos = body.global_position - normal
-	mesh.look_at(look_pos)
+	#debug_sphere.global_position = body.global_position + normal.normalized() * 3.0

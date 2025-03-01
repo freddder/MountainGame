@@ -3,15 +3,21 @@ class_name Player
 
 @export_group("Camera")
 @export var camera_sensitivity: float = .35
-var camera_input_direction := Vector2.ZERO
+var camera_input_direction: Vector2 = Vector2.ZERO
 
 @onready var camera_target: Node3D = $CameraTarget
-@onready var wall_check: RayCast3D = $Mesh/WallCheck
-@onready var wall_top_check: RayCast3D = $Mesh/WallTopCheck
+@onready var top_checks_parent: Node3D = $Mesh/UpperChecks
+@onready var bot_checks_parent: Node3D = $Mesh/BottomChecks
+var wall_checks: Array[RayCast3D] = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	for check in top_checks_parent.get_children():
+		if check is RayCast3D:
+			wall_checks.push_back(check)
+	
+	for check in bot_checks_parent.get_children():
+		if check is RayCast3D:
+			wall_checks.push_back(check)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -48,6 +54,20 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
+func get_average_wall_checks_normal() -> Vector3:
+	var checks_count = 0
+	var normal_sum = Vector3.ZERO
+	for check in wall_checks:
+		if !check.is_colliding():
+			continue
+		
+		normal_sum += check.get_collision_normal()
+		checks_count += 1
+	
+	if checks_count == 0:
+		return Vector3.ZERO
+	return normal_sum / checks_count
+
 func get_best_wall_collision() -> KinematicCollision3D:	
 	var highest_dot = 0
 	var best_collision = null
@@ -60,10 +80,8 @@ func get_best_wall_collision() -> KinematicCollision3D:
 		var target_horizontal = camera_target.transform.basis.z * input_dir.y + camera_target.transform.basis.x * input_dir.x
 		target_horizontal.y = 0
 		var dot = target_horizontal.normalized().dot(-collision.get_normal().normalized()) # wrong as hell
-		if get_slide_collision_count() > 2:
-			print(dot)
 		if dot > highest_dot:
 			highest_dot = dot
 			best_collision = collision
-	print("")
+	
 	return best_collision

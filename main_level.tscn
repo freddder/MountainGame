@@ -49,6 +49,11 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, -9)
 polygon = PackedVector2Array(0, 0, 0, 0.866, 0.5, 0)
 material = SubResource("StandardMaterial3D_cg5as")
 
+[node name="Ramp61" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-07, 0, 10, 0, 10, 0, -10, 0, -4.37114e-07, -7, 0, 19)
+polygon = PackedVector2Array(0, 0, 0, 0.866, 0.5, 0)
+material = SubResource("StandardMaterial3D_cg5as")
+
 [node name="Ramp45" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, 1)
 polygon = PackedVector2Array(0, 0, 0, 0.707, 0.707, 0)
@@ -91,5 +96,6 @@ material = SubResource("StandardMaterial3D_cg5as")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -25)
-radius = 6.0
+radius = 8.0
+rings = 13
 material = SubResource("StandardMaterial3D_cg5as")

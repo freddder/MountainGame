@@ -8,12 +8,13 @@ var walk_acceleration := 20.0
 @onready var body: Player = $"../.."
 @onready var camera_target: Node3D = $"../../CameraTarget"
 @onready var mesh: Node3D = $"../../Mesh"
-@onready var wall_check: RayCast3D = $"../../Mesh/WallCheck"
+@onready var collision_shape: CollisionShape3D = $"../../CollisionShape3D"
 
 func enter():
 	var look_pos = body.global_position + body.velocity
 	look_pos.y = body.global_position.y
 	mesh.look_at(look_pos)
+	collision_shape.look_at(look_pos)
 
 func exit():
 	pass
@@ -45,11 +46,12 @@ func physics_update(delta: float):
 	if Input.is_action_pressed("jump"):
 		vertical_velocity = 10.0
 	elif collision:
-		if wall_check.get_collision_normal().dot(target_horizontal_velocity) < 0:
+		if collision.get_normal().dot(target_horizontal_velocity) < 0:
 			vertical_velocity = 10.0
 	
 	body.velocity = Vector3(horizontal_velocity.x, vertical_velocity, horizontal_velocity.z)
 	
-	var look_pos = body.global_position + body.velocity
-	look_pos.y = body.global_position.y
-	mesh.look_at(look_pos)
+	if input_direction != Vector2.ZERO:
+		var look_pos = body.global_position + body.velocity
+		look_pos.y = body.global_position.y
+		mesh.look_at(look_pos)

@@ -7,7 +7,6 @@ class_name PlayerAirborne
 
 @onready var body: Player = $"../.."
 @onready var mesh: Node3D = $"../../Mesh"
-@onready var wall_check: RayCast3D = $"../../Mesh/WallCheck"
 
 func enter():
 	pass

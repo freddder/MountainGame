@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://4wvwyli1pm5a"]
+[gd_scene load_steps=12 format=3 uid="uid://4wvwyli1pm5a"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_4s51k"]
 [ext_resource type="Script" path="res://State Machine/state_machine.gd" id="2_t4gjq"]
@@ -10,11 +10,17 @@
 
 [sub_resource type="PrismMesh" id="PrismMesh_8a52o"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_02nkx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbsip"]
+albedo_color = Color(0, 1, 0, 1)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4lit3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u1kto"]
 
 [node name="Player" type="CharacterBody3D"]
+floor_snap_length = 0.4
 script = ExtResource("1_4s51k")
 
 [node name="Mesh" type="Node3D" parent="."]
@@ -28,12 +34,53 @@ transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.572
 mesh = SubResource("PrismMesh_8a52o")
 skeleton = NodePath("../..")
 
-[node name="WallCheck" type="RayCast3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.709849, 0)
+[node name="DebugSphere" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
+mesh = SubResource("SphereMesh_02nkx")
+surface_material_override/0 = SubResource("StandardMaterial3D_wbsip")
+
+[node name="UpperChecks" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.496725, 0)
+
+[node name="Front" type="RayCast3D" parent="Mesh/UpperChecks"]
 target_position = Vector3(0, 0, -1)
 
-[node name="WallTopCheck" type="RayCast3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.189604, 0)
+[node name="Right45" type="RayCast3D" parent="Mesh/UpperChecks"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Right90" type="RayCast3D" parent="Mesh/UpperChecks"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Left45" type="RayCast3D" parent="Mesh/UpperChecks"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Left90" type="RayCast3D" parent="Mesh/UpperChecks"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="BottomChecks" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00268364, -0.765419, -0.00119472)
+
+[node name="Front" type="RayCast3D" parent="Mesh/BottomChecks"]
+target_position = Vector3(0, 0, -1)
+
+[node name="Right45" type="RayCast3D" parent="Mesh/BottomChecks"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Right90" type="RayCast3D" parent="Mesh/BottomChecks"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Left45" type="RayCast3D" parent="Mesh/BottomChecks"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="Left90" type="RayCast3D" parent="Mesh/BottomChecks"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
