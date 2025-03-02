@@ -73,7 +73,7 @@ func get_best_wall_collision() -> KinematicCollision3D:
 	var best_collision = null
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
-		if collision.get_angle() < deg_to_rad(50):
+		if collision.get_angle() < deg_to_rad(46):
 			continue
 		
 		var input_dir = get_input_dir()

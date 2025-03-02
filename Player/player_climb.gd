@@ -18,6 +18,8 @@ func enter():
 func exit():
 	is_jumping = false
 	debug_sphere.global_position = body.global_position
+	mesh.global_rotation.x = 0.0
+	collision_shape.global_rotation.x = 0.0
 
 func update(delta: float):
 	pass
