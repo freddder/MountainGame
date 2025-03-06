@@ -32,7 +32,7 @@ func physics_update(delta: float):
 	var input_direction = body.get_input_dir()
 	var target_horizontal_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
 	target_horizontal_velocity.y = 0
-	target_horizontal_velocity = target_horizontal_velocity.normalized() * max_walk_speed
+	target_horizontal_velocity = target_horizontal_velocity * max_walk_speed
 	
 	# Horizontal velocity
 	# velocity = velocity.lerp(target, H\_acc \* delta) 

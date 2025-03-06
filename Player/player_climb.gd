@@ -55,7 +55,7 @@ func physics_update(delta: float):
 	if input != Vector2.ZERO:
 		var wall_right = Vector3.UP.cross(normal).normalized() # Right direction relative to the wall
 		var wall_up = normal.cross(wall_right).normalized() # Up direction along the wall
-		var climb_dir = (wall_right * input.x + wall_up * -input.y).normalized()
+		var climb_dir = (wall_right * input.x + wall_up * -input.y)
 		body.velocity = climb_dir * climb_speed
 		body.velocity += -normal.normalized()
 		
