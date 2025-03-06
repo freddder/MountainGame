@@ -2,7 +2,8 @@ extends CharacterBody3D
 class_name Player
 
 @export_group("Camera")
-@export var camera_sensitivity: float = .01
+@export var camera_mouse_sensitivity: float = .003
+@export var camera_controller_sensitivity: float = .035
 
 @onready var camera_target: Node3D = $CameraTarget
 @onready var top_checks_parent: Node3D = $Mesh/UpperChecks
@@ -20,7 +21,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	var camera_stick = Input.get_vector("camera_left", "camera_right", "camera_forward", "camera_back")
+	camera_target.rotation.x -= camera_stick.y * camera_controller_sensitivity
+	camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
+	camera_target.rotation.y += -camera_stick.x * camera_controller_sensitivity
 
 func get_input_dir() -> Vector2:
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back").limit_length(1.0)
@@ -34,9 +38,9 @@ func _physics_process(delta):
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		camera_target.rotation.x -= event.relative.y * camera_sensitivity
-		camera_target.rotation.x = clampf(camera_target.rotation.x, -PI / 2 + 0.1, PI / 2 - 0.1)
-		camera_target.rotation.y += -event.relative.x * camera_sensitivity
+		camera_target.rotation.x -= event.relative.y * camera_mouse_sensitivity
+		camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
+		camera_target.rotation.y += -event.relative.x * camera_mouse_sensitivity
 	
 	if event.is_action_pressed("left_click"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
