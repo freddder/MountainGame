@@ -2,25 +2,22 @@
 
 [ext_resource type="PackedScene" uid="uid://4wvwyli1pm5a" path="res://Player/player.tscn" id="1_614a4"]
 [ext_resource type="Texture2D" uid="uid://bbk5x2e0bkvji" path="res://checker_black_512x512.png" id="1_jsl4u"]
+[ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="3_5fdu0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ln7vp"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 
-[sub_resource type="Sky" id="Sky_s0e3t"]
+[sub_resource type="Sky" id="Sky_tdt3v"]
 sky_material = SubResource("ProceduralSkyMaterial_ln7vp")
 
 [sub_resource type="Environment" id="Environment_04o2j"]
 background_mode = 2
-sky = SubResource("Sky_s0e3t")
+sky = SubResource("Sky_tdt3v")
 tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxn8s"]
-albedo_texture = ExtResource("1_jsl4u")
-uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cg5as"]
 albedo_texture = ExtResource("1_jsl4u")
 uv1_triplanar = true
 
@@ -47,44 +44,44 @@ material = SubResource("StandardMaterial3D_lxn8s")
 [node name="Ramp60" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, -9)
 polygon = PackedVector2Array(0, 0, 0, 0.866, 0.5, 0)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="Ramp61" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(-4.37114e-07, 0, 10, 0, 10, 0, -10, 0, -4.37114e-07, -7, 0, 19)
 polygon = PackedVector2Array(0, 0, 0, 0.866, 0.5, 0)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="Ramp45" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, 1)
 polygon = PackedVector2Array(0, 0, 0, 0.707, 0.707, 0)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="Ramp30" type="CSGPolygon3D" parent="CSGCombiner3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -25, 0, 11)
 polygon = PackedVector2Array(0, 0, 0, 0.5, 0.866, 0)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 3, -6)
 size = Vector3(6, 6, 6)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3, -12)
 size = Vector3(12, 6, 6)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 4.5, 4)
 size = Vector3(6, 9, 6)
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 15)
 radius = 6.0
 height = 6.0
 sides = 16
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 15)
@@ -92,10 +89,10 @@ operation = 2
 radius = 5.0
 height = 6.0
 sides = 16
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -25)
 radius = 8.0
 rings = 13
-material = SubResource("StandardMaterial3D_cg5as")
+material = ExtResource("3_5fdu0")
