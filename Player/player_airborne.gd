@@ -61,8 +61,7 @@ func physics_update(delta: float):
 		var curr_horizontal_velocity = body.velocity
 		curr_horizontal_velocity.y = 0
 		if input_direction != Vector2.ZERO:
-			target_horizontal_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
-			target_horizontal_velocity.y = 0
+			target_horizontal_velocity = Vector3(input_direction.x, 0.0, input_direction.y).rotated(Vector3.UP, camera_target.rotation.y)
 			target_horizontal_velocity = target_horizontal_velocity * glide_horizontal_speed
 			
 			var look_angle = atan2(-target_horizontal_velocity.x, -target_horizontal_velocity.z)

@@ -3,12 +3,14 @@ class_name PlayerGrounded
 
 @export_group("Movement")
 @export var max_walk_speed: float = 10.0
+@export var walk_turn_speed: float = 7.0
 var walk_acceleration := 20.0
 
 @onready var body: Player = $"../.."
 @onready var camera_target: Node3D = $"../../CameraTarget"
 @onready var mesh: Node3D = $"../../Mesh"
 @onready var collision_shape: CollisionShape3D = $"../../CollisionShape3D"
+@onready var debug_sphere = $"../../Mesh/DebugSphere"
 
 func enter():
 	var look_pos = body.global_position + body.velocity
@@ -30,13 +32,19 @@ func physics_update(delta: float):
 	var collision = body.get_best_wall_collision()
 	
 	var input_direction = body.get_input_dir()
-	var target_horizontal_velocity = camera_target.transform.basis.z * input_direction.y + camera_target.transform.basis.x * input_direction.x
-	target_horizontal_velocity.y = 0
+	var target_horizontal_velocity = Vector3(input_direction.x, 0.0, input_direction.y).rotated(Vector3.UP, camera_target.rotation.y)
 	target_horizontal_velocity = target_horizontal_velocity * max_walk_speed
 	
+	if input_direction != Vector2.ZERO:
+		var target_rotation = atan2(-target_horizontal_velocity.x, -target_horizontal_velocity.z)
+		var angle_diff = angle_difference(mesh.rotation.y, target_rotation)
+		var step = walk_turn_speed * delta
+		mesh.rotation.y += clamp(angle_diff, -step, step)
+		mesh.rotation.y = fmod(mesh.rotation.y, TAU)
+	
 	# Horizontal velocity
-	# velocity = velocity.lerp(target, H\_acc \* delta) 
-	var horizontal_velocity := body.velocity.lerp(target_horizontal_velocity, walk_acceleration * delta)
+	var curr_speed = Vector3(body.velocity.x, 0.0, body.velocity.z).length()
+	var horizontal_velocity = -mesh.global_basis.z * lerpf(curr_speed, target_horizontal_velocity.length(), walk_acceleration * delta)
 	
 	# Vertical velocity
 	var vertical_velocity = 0.0
@@ -47,8 +55,3 @@ func physics_update(delta: float):
 			vertical_velocity = 10.0
 	
 	body.velocity = Vector3(horizontal_velocity.x, vertical_velocity, horizontal_velocity.z)
-	
-	if input_direction != Vector2.ZERO:
-		var look_pos = body.global_position + body.velocity
-		look_pos.y = body.global_position.y
-		mesh.look_at(look_pos)
