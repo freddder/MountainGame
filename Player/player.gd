@@ -61,7 +61,7 @@ func get_average_wall_checks_normal() -> Vector3:
 		return Vector3.ZERO
 	return normal_sum / checks_count
 
-func get_best_wall_collision() -> KinematicCollision3D:	
+func get_best_wall_collision() -> KinematicCollision3D:
 	var highest_dot = 0
 	var best_collision = null
 	for i in get_slide_collision_count():

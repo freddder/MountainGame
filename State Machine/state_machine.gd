@@ -28,7 +28,6 @@ func transition_to_state(new_state_name : String):
 	if !new_state:
 		return
 	
-	print(new_state_name)
 	if current_state:
 		current_state.exit()
 	

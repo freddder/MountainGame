@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4wvwyli1pm5a"]
+[gd_scene load_steps=13 format=3 uid="uid://4wvwyli1pm5a"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_4s51k"]
 [ext_resource type="Script" path="res://State Machine/state_machine.gd" id="2_t4gjq"]
@@ -9,6 +9,8 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_r25e2"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_8a52o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y2vgn"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_02nkx"]
 
@@ -33,6 +35,11 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.57242e-09, 0, 0.617955, -0.460826)
 mesh = SubResource("PrismMesh_8a52o")
 skeleton = NodePath("../..")
+
+[node name="Wings" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(2.74403, 0, 0, 0, 0.0786891, 0, 0, 0, 0.602709, 0, 0.417921, 0)
+visible = false
+mesh = SubResource("BoxMesh_y2vgn")
 
 [node name="DebugSphere" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)

@@ -17,6 +17,7 @@ var glide_action_buffer_timer: float = 0.3
 @onready var body: Player = $"../.."
 @onready var mesh: Node3D = $"../../Mesh"
 @onready var camera_target: Node3D = $"../../CameraTarget"
+@onready var wings: MeshInstance3D = $"../../Mesh/Wings"
 
 
 func enter():
@@ -25,6 +26,7 @@ func enter():
 func exit():
 	is_gliding = false
 	is_glide_action_buffer = false
+	wings.visible = false
 	reset_glide_action_buffer()
 
 func update(delta: float):
@@ -42,6 +44,7 @@ func physics_update(delta: float):
 	
 	if body.velocity.y < 0.0 and (Input.is_action_just_pressed("jump") or is_glide_action_buffer):
 		is_gliding = !is_gliding
+		wings.visible = !wings.visible
 		reset_glide_action_buffer()
 	elif Input.is_action_just_pressed("jump") and !is_glide_action_buffer:
 		is_glide_action_buffer = true
