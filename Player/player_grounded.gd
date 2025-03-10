@@ -29,7 +29,6 @@ func physics_update(delta: float):
 		ChangeState.emit("airborne")
 		return
 	
-	var collision = body.get_best_wall_collision()
 	
 	var input_direction = body.get_input_dir()
 	var target_horizontal_velocity = Vector3(input_direction.x, 0.0, input_direction.y).rotated(Vector3.UP, camera_target.rotation.y)
@@ -47,6 +46,7 @@ func physics_update(delta: float):
 	var horizontal_velocity = -mesh.global_basis.z * lerpf(curr_speed, target_horizontal_velocity.length(), walk_acceleration * delta)
 	
 	# Vertical velocity
+	var collision = body.get_best_wall_collision()
 	var vertical_velocity = 0.0
 	if Input.is_action_pressed("jump"):
 		vertical_velocity = 10.0
@@ -55,3 +55,4 @@ func physics_update(delta: float):
 			vertical_velocity = 10.0
 	
 	body.velocity = Vector3(horizontal_velocity.x, vertical_velocity, horizontal_velocity.z)
+	body.add_stamina_amount(body.stamina_recovery_rate * delta)

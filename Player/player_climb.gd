@@ -4,6 +4,7 @@ class_name PlayerClimb
 @export_group("Movement")
 @export var climb_speed: float = 5.0
 @export var jump_force: float = 10.0
+@export var climb_stamina_reduction_rate: float = 5.0
 
 var is_jumping : bool = false
 
@@ -30,7 +31,7 @@ func physics_update(delta: float):
 		return
 	
 	var normal = body.get_average_wall_checks_normal()
-	if normal == Vector3.ZERO:
+	if normal == Vector3.ZERO or body.stamina <= 0.0:
 		ChangeState.emit("airborne")
 		return
 	
@@ -62,6 +63,8 @@ func physics_update(delta: float):
 		var look_pos = body.global_position - normal
 		mesh.look_at(look_pos)
 		collision_shape.look_at(look_pos)
+		
+		body.add_stamina_amount(-climb_stamina_reduction_rate * delta)
 	else:
 		body.velocity = Vector3.ZERO
 	

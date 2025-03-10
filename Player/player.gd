@@ -5,10 +5,17 @@ class_name Player
 @export var camera_mouse_sensitivity: float = .003
 @export var camera_controller_sensitivity: float = .035
 
+@export_group("Stamina")
+@export var max_stamina = 100.0
+@export var stamina_recovery_rate = 25.0
+var stamina: float = max_stamina
+var is_exhausted: bool = false
+
 @onready var camera_target: Node3D = $CameraTarget
 @onready var top_checks_parent: Node3D = $Mesh/UpperChecks
 @onready var bot_checks_parent: Node3D = $Mesh/BottomChecks
 var wall_checks: Array[RayCast3D] = []
+
 
 func _ready():
 	for check in top_checks_parent.get_children():
@@ -34,7 +41,6 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -77,3 +83,14 @@ func get_best_wall_collision() -> KinematicCollision3D:
 			highest_dot = dot
 			best_collision = collision
 	return best_collision
+
+func add_stamina_amount(amount: float):
+	stamina += amount
+	
+	if amount < 0.0 and stamina < 0.0:
+		is_exhausted = true
+	elif amount > 0.0 and stamina > max_stamina:
+		is_exhausted = false
+	
+	stamina = clamp(stamina, 0.0, max_stamina)
+	#print(stamina)
