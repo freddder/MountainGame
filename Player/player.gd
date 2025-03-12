@@ -10,12 +10,13 @@ class_name Player
 @export var stamina_recovery_rate = 25.0
 var stamina: float = max_stamina
 var is_exhausted: bool = false
+var wheel_visible_timer = 2.0
 
 @onready var camera_target: Node3D = $CameraTarget
 @onready var top_checks_parent: Node3D = $Mesh/UpperChecks
 @onready var bot_checks_parent: Node3D = $Mesh/BottomChecks
+@onready var stamina_wheel: TextureProgressBar = $PlayerUi/TextureProgressBar
 var wall_checks: Array[RayCast3D] = []
-
 
 func _ready():
 	for check in top_checks_parent.get_children():
@@ -32,6 +33,15 @@ func _process(delta):
 	camera_target.rotation.x -= camera_stick.y * camera_controller_sensitivity
 	camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
 	camera_target.rotation.y += -camera_stick.x * camera_controller_sensitivity
+	
+	if stamina_wheel.value == 100:
+		if stamina_wheel.visible:
+			wheel_visible_timer -= delta
+			if wheel_visible_timer < 0.0:
+				stamina_wheel.visible = false
+				wheel_visible_timer = 2.0
+	else:
+		stamina_wheel.visible = true
 
 func get_input_dir() -> Vector2:
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back").limit_length(1.0)
@@ -89,8 +99,11 @@ func add_stamina_amount(amount: float):
 	
 	if amount < 0.0 and stamina < 0.0:
 		is_exhausted = true
+		stamina_wheel.modulate = "c90000"
 	elif amount > 0.0 and stamina > max_stamina:
 		is_exhausted = false
+		stamina_wheel.modulate = "00d000"
 	
 	stamina = clamp(stamina, 0.0, max_stamina)
+	stamina_wheel.value = stamina
 	#print(stamina)

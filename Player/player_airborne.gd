@@ -6,7 +6,7 @@ class_name PlayerAirborne
 @export var max_fall_speed: float = 75.0
 @export_group("Glide")
 @export var glide_fall_speed: float = 4.0
-@export var glide_horizontal_speed: float = 10.0
+@export var glide_horizontal_speed: float = 8.0
 @export var glide_horizontal_acceleration: float = 2.0
 @export var glide_turn_acceleration: float = 1.0
 @export var glide_stamina_reduction_rate: float = 5.0

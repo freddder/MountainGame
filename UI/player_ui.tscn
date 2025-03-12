@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnaeey6ymunui"]
+
+[ext_resource type="Texture2D" uid="uid://cc00vjfwcrses" path="res://UI/StaminaWheel-Empty.png" id="1_25pl0"]
+[ext_resource type="Texture2D" uid="uid://cwb0ptka4xp0a" path="res://UI/StaminaWheel-Full.png" id="2_m7eu7"]
+
+[node name="PlayerUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+modulate = Color(0, 0.815686, 0, 1)
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 634.0
+offset_top = 256.0
+offset_right = -6.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145, 0.145)
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("1_25pl0")
+texture_progress = ExtResource("2_m7eu7")

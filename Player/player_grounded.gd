@@ -2,9 +2,14 @@ extends State
 class_name PlayerGrounded
 
 @export_group("Movement")
-@export var max_walk_speed: float = 10.0
+@export var max_walk_speed: float = 5.0
 @export var walk_turn_speed: float = 7.0
 var walk_acceleration := 20.0
+@export_group("Running")
+@export var max_run_speed: float = 10.0
+@export var run_turn_speed: float = 4.0
+@export var run_stamina_reduction_rate: float = 20.0
+var is_running: bool = false
 
 @onready var body: Player = $"../.."
 @onready var camera_target: Node3D = $"../../CameraTarget"
@@ -29,15 +34,19 @@ func physics_update(delta: float):
 		ChangeState.emit("airborne")
 		return
 	
+	if body.is_exhausted:
+		is_running = false
+	else:
+		is_running = Input.is_action_pressed("run")
 	
 	var input_direction = body.get_input_dir()
 	var target_horizontal_velocity = Vector3(input_direction.x, 0.0, input_direction.y).rotated(Vector3.UP, camera_target.rotation.y)
-	target_horizontal_velocity = target_horizontal_velocity * max_walk_speed
+	target_horizontal_velocity = target_horizontal_velocity * max_run_speed if is_running else target_horizontal_velocity * max_walk_speed
 	
 	if input_direction != Vector2.ZERO:
 		var target_rotation = atan2(-target_horizontal_velocity.x, -target_horizontal_velocity.z)
 		var angle_diff = angle_difference(mesh.rotation.y, target_rotation)
-		var step = walk_turn_speed * delta
+		var step = run_turn_speed * delta if is_running else walk_turn_speed * delta
 		mesh.rotation.y += clamp(angle_diff, -step, step)
 		mesh.rotation.y = fmod(mesh.rotation.y, TAU)
 	
@@ -55,4 +64,8 @@ func physics_update(delta: float):
 			vertical_velocity = 10.0
 	
 	body.velocity = Vector3(horizontal_velocity.x, vertical_velocity, horizontal_velocity.z)
-	body.add_stamina_amount(body.stamina_recovery_rate * delta)
+	
+	if is_running:
+		body.add_stamina_amount(-run_stamina_reduction_rate * delta)
+	else:
+		body.add_stamina_amount(body.stamina_recovery_rate * delta)
