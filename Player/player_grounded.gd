@@ -34,12 +34,12 @@ func physics_update(delta: float):
 		ChangeState.emit("airborne")
 		return
 	
+	var input_direction = body.get_input_dir()
 	if body.is_exhausted:
 		is_running = false
 	else:
-		is_running = Input.is_action_pressed("run")
+		is_running = Input.is_action_pressed("run") and input_direction != Vector2.ZERO
 	
-	var input_direction = body.get_input_dir()
 	var target_horizontal_velocity = Vector3(input_direction.x, 0.0, input_direction.y).rotated(Vector3.UP, camera_target.rotation.y)
 	target_horizontal_velocity = target_horizontal_velocity * max_run_speed if is_running else target_horizontal_velocity * max_walk_speed
 	
