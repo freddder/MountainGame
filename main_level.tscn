@@ -92,7 +92,20 @@ sides = 16
 material = ExtResource("3_5fdu0")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -35)
 radius = 8.0
 rings = 13
+material = ExtResource("3_5fdu0")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 8, -30)
+size = Vector3(20, 16, 6)
+material = ExtResource("3_5fdu0")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 8, -30)
+operation = 2
+radius = 7.0
+height = 6.0
+sides = 16
 material = ExtResource("3_5fdu0")

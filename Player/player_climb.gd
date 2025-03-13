@@ -31,7 +31,8 @@ func physics_update(delta: float):
 		return
 	
 	var normal = body.get_average_wall_checks_normal()
-	if normal == Vector3.ZERO or body.stamina <= 0.0:
+	var dot = normal.dot(Vector3.UP)
+	if normal == Vector3.ZERO or body.is_exhausted or abs(dot) > 0.7:
 		ChangeState.emit("airborne")
 		return
 	
