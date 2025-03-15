@@ -167,7 +167,7 @@ sides = 11
 material = ExtResource("2_w0cog")
 
 [node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Castle"]
-transform = Transform3D(-0.866025, 0.5, 2.18557e-08, -0.25, -0.433013, 0.866025, 0.433013, 0.75, 0.5, -52, 1, -9)
+transform = Transform3D(-0.866025, 0.5, 5.36311e-09, -0.129409, -0.224144, 0.965925, 0.482963, 0.836516, 0.258819, -52, 1, -9)
 radius = 3.0
 height = 8.0
 sides = 11

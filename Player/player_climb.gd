@@ -38,7 +38,8 @@ func physics_update(delta: float):
 	
 	# Movement
 	var input : Vector2 = body.get_input_dir()
-	if Input.is_action_just_pressed("jump") and !is_jumping:
+	var wants_to_jump = Input.is_action_just_pressed("jump") and !body.is_paused
+	if wants_to_jump and !is_jumping:
 		is_jumping = true
 		var jump_horizontal_dir = Vector2(normal.x, normal.z).normalized()
 		var jump_dir = Vector3(jump_horizontal_dir.x, 1.0, jump_horizontal_dir.y) * jump_force

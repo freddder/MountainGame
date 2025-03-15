@@ -18,6 +18,9 @@ var wheel_visible_timer = 2.0
 @onready var stamina_wheel: TextureProgressBar = $PlayerUi/StaminaWheel
 var wall_checks: Array[RayCast3D] = []
 
+@onready var player_ui: PlayerUi = $PlayerUi
+var is_paused: bool = false
+
 func _ready():
 	for check in top_checks_parent.get_children():
 		if check is RayCast3D:
@@ -26,13 +29,18 @@ func _ready():
 	for check in bot_checks_parent.get_children():
 		if check is RayCast3D:
 			wall_checks.push_back(check)
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	player_ui.PauseToggle.connect(toggle_pause)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var camera_stick = Input.get_vector("camera_left", "camera_right", "camera_forward", "camera_back")
-	camera_target.rotation.x -= camera_stick.y * camera_controller_sensitivity
-	camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
-	camera_target.rotation.y += -camera_stick.x * camera_controller_sensitivity
+	if !is_paused:
+		var camera_stick = Input.get_vector("camera_left", "camera_right", "camera_forward", "camera_back")
+		camera_target.rotation.x -= camera_stick.y * camera_controller_sensitivity
+		camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
+		camera_target.rotation.y += -camera_stick.x * camera_controller_sensitivity
 	
 	if stamina_wheel.value == 100:
 		if stamina_wheel.visible:
@@ -42,8 +50,14 @@ func _process(delta):
 				wheel_visible_timer = 2.0
 	else:
 		stamina_wheel.visible = true
+	
+	if Input.is_action_just_pressed("pause"):
+		toggle_pause()
 
 func get_input_dir() -> Vector2:
+	if is_paused:
+		return Vector2.ZERO
+	
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back").limit_length(1.0)
 	return input_direction
 
@@ -57,11 +71,6 @@ func _input(event):
 		camera_target.rotation.x -= event.relative.y * camera_mouse_sensitivity
 		camera_target.rotation.x = clampf(camera_target.rotation.x, -deg_to_rad(85), deg_to_rad(65))
 		camera_target.rotation.y += -event.relative.x * camera_mouse_sensitivity
-	
-	if event.is_action_pressed("left_click"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func get_average_wall_checks_normal() -> Vector3:
 	var checks_count = 0
@@ -106,3 +115,13 @@ func add_stamina_amount(amount: float):
 	
 	stamina = clamp(stamina, 0.0, max_stamina)
 	stamina_wheel.value = stamina
+
+func toggle_pause():
+	if is_paused: #unpause
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		is_paused = false
+		player_ui.unpause()
+	else: #pause
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		is_paused = true
+		player_ui.pause()

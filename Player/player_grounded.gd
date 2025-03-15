@@ -57,7 +57,8 @@ func physics_update(delta: float):
 	# Vertical velocity
 	var collision = body.get_best_wall_collision()
 	var vertical_velocity = 0.0
-	if Input.is_action_pressed("jump"):
+	var wants_to_jump = Input.is_action_pressed("jump") and !body.is_paused
+	if wants_to_jump:
 		vertical_velocity = 10.0
 	elif collision:
 		if collision.get_normal().dot(target_horizontal_velocity) < 0:

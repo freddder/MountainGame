@@ -42,9 +42,10 @@ func physics_update(delta: float):
 		ChangeState.emit("climb")
 		return
 	
-	if !body.is_exhausted and body.velocity.y < 0.0 and (Input.is_action_just_pressed("jump") or is_glide_action_buffered):
+	var wants_to_jump = Input.is_action_just_pressed("jump") and !body.is_paused
+	if !body.is_exhausted and body.velocity.y < 0.0 and (wants_to_jump or is_glide_action_buffered):
 		toggle_gliding()
-	elif Input.is_action_just_pressed("jump") and !is_glide_action_buffered:
+	elif wants_to_jump and !is_glide_action_buffered:
 		is_glide_action_buffered = true
 	
 	if is_glide_action_buffered:
