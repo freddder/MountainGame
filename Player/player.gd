@@ -15,7 +15,7 @@ var wheel_visible_timer = 2.0
 @onready var camera_target: Node3D = $CameraTarget
 @onready var top_checks_parent: Node3D = $Mesh/UpperChecks
 @onready var bot_checks_parent: Node3D = $Mesh/BottomChecks
-@onready var stamina_wheel: TextureProgressBar = $PlayerUi/TextureProgressBar
+@onready var stamina_wheel: TextureProgressBar = $PlayerUi/StaminaWheel
 var wall_checks: Array[RayCast3D] = []
 
 func _ready():
@@ -77,7 +77,7 @@ func get_average_wall_checks_normal() -> Vector3:
 		return Vector3.ZERO
 	return normal_sum / checks_count
 
-func get_best_wall_collision() -> KinematicCollision3D:
+func get_best_wall_collision() -> KinematicCollision3D:	
 	var highest_dot = 0
 	var best_collision = null
 	for i in get_slide_collision_count():
@@ -106,4 +106,3 @@ func add_stamina_amount(amount: float):
 	
 	stamina = clamp(stamina, 0.0, max_stamina)
 	stamina_wheel.value = stamina
-	#print(stamina)

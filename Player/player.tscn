@@ -112,6 +112,13 @@ script = ExtResource("3_7auwm")
 
 [node name="Airborne" type="Node" parent="StateMachine"]
 script = ExtResource("4_plo77")
+fall_acceleration = null
+max_fall_speed = null
+glide_fall_speed = null
+glide_horizontal_speed = null
+glide_horizontal_acceleration = null
+glide_turn_acceleration = null
+glide_stamina_reduction_rate = null
 
 [node name="Climb" type="Node" parent="StateMachine"]
 script = ExtResource("5_fvhre")

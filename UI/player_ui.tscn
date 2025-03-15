@@ -11,17 +11,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+[node name="StaminaWheel" type="TextureProgressBar" parent="."]
 modulate = Color(0, 0.815686, 0, 1)
 texture_filter = 2
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 634.0
-offset_top = 256.0
-offset_right = -6.0
-offset_bottom = 120.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -69.0
+offset_right = 554.0
+offset_bottom = 443.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.095, 0.095)
@@ -29,3 +31,45 @@ value = 100.0
 fill_mode = 5
 texture_under = ExtResource("1_25pl0")
 texture_progress = ExtResource("2_m7eu7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -69.0
+offset_right = 127.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.427451)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -50.5
+offset_right = 77.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Restart" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Quit to Main Menu"

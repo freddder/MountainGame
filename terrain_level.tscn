@@ -1,6 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7r2uxco3ce6f"]
+[gd_scene load_steps=14 format=3 uid="uid://c7r2uxco3ce6f"]
 
 [ext_resource type="PackedScene" uid="uid://4wvwyli1pm5a" path="res://Player/player.tscn" id="1_c17g0"]
+[ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="2_w0cog"]
+[ext_resource type="PackedScene" uid="uid://bemrwdk0pt4p0" path="res://Maxwell/maxwell.tscn" id="3_ttl64"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_akpx0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -75,7 +77,7 @@ mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_vbqrh")])
 environment = SubResource("Environment_2n558")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.755853, -0.438107, 0.486567, 0, 0.743145, 0.669131, -0.654741, 0.505764, -0.561708, 0, 0, 0)
+transform = Transform3D(-0.377927, -0.862636, -0.336199, 0.463011, -0.490559, 0.738222, -0.801744, 0.12333, 0.584806, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Terrain3D" type="Terrain3D" parent="."]
@@ -86,4 +88,242 @@ top_level = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_c17g0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 52, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -146, -36)
+
+[node name="Castle" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -150, 1)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -138, 17, 0)
+size = Vector3(54, 38, 52)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Castle/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -10, -1)
+operation = 2
+size = Vector3(6, 17, 10)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -136, 21, 0)
+size = Vector3(58, 4, 61)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -134, 32, 1.60709e-08)
+size = Vector3(61, 4, 66)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133, 16, 0)
+operation = 2
+size = Vector3(37, 35, 43)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107, 18, 30)
+size = Vector3(10, 37, 10)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -107, 18, -30)
+size = Vector3(10, 37, 10)
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81, 12, 16)
+radius = 3.0
+height = 24.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81, 2, -16)
+radius = 3.0
+height = 4.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(0.555302, -0.755432, -0.347795, 0.784839, 0.614345, -0.0812943, 0.275079, -0.22782, 0.93404, -94.9209, 11.0036, -20)
+radius = 3.0
+height = 28.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(0.965926, -0.0669873, 0.25, 0, 0.965926, 0.258819, -0.258819, -0.25, 0.933013, -56, 7, 14)
+radius = 3.0
+height = 18.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 4, -16)
+radius = 3.0
+height = 10.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(-0.866025, 0.5, 2.18557e-08, -0.25, -0.433013, 0.866025, 0.433013, 0.75, 0.5, -52, 1, -9)
+radius = 3.0
+height = 8.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -118.446, 26.5388, 23.8801)
+operation = 2
+radius = 3.0
+height = 8.0
+sides = 10
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="Castle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -136.446, 34.5388, -5.1199)
+operation = 2
+radius = 4.0
+height = 8.0
+sides = 10
+material = ExtResource("2_w0cog")
+
+[node name="Path" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -106, -143)
+use_collision = true
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 16, -13)
+size = Vector3(20, 3, 4)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 16, -5)
+size = Vector3(6, 3, 12)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 23, 13)
+size = Vector3(14, 17, 6)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Path"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -26.892, 16, -2.20607)
+size = Vector3(36, 3, 8)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 3, -9)
+size = Vector3(5, 3, 10)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 23, 13)
+size = Vector3(10, 3, 6)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 21.5, 4.5)
+size = Vector3(8, 6, 9)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 35.5, 2)
+size = Vector3(1, 22, 4)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5, 35.5, 2)
+size = Vector3(5, 22, 4)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 47.5, -14.5)
+size = Vector3(5, 4, 11)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 33.5, 8)
+size = Vector3(8, 2, 16)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 27, 13)
+size = Vector3(4, 11, 6)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 10.5, -7.5)
+size = Vector3(5, 6, 15)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 9, -11.5)
+size = Vector3(1, 11, 7)
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 9, -3)
+radius = 1.0
+height = 12.0
+material = ExtResource("2_w0cog")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Path"]
+transform = Transform3D(-0.258819, -5.50247e-08, 0.965926, -0.965926, -4.2222e-08, -0.258819, 5.50247e-08, -1, -4.2222e-08, 33, 21, 1)
+operation = 2
+radius = 2.0
+height = 4.0
+sides = 11
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 71.5, -23)
+size = Vector3(6, 26, 10)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5, 75, -23.5)
+size = Vector3(11, 5, 9)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="Path"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -17.5607, 90, -29.4393)
+size = Vector3(8, 5, 9)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 71, -21)
+operation = 2
+size = Vector3(5, 21, 4)
+material = ExtResource("2_w0cog")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Path"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 79.5, -24.5)
+operation = 2
+size = Vector3(5, 4, 5)
+material = ExtResource("2_w0cog")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Path"]
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Path/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 57, -11)
+size = Vector3(17, 21, 22)
+material = ExtResource("2_w0cog")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Path/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 47, 0)
+operation = 2
+radius = 12.0
+radial_segments = 14
+rings = 8
+material = ExtResource("2_w0cog")
+
+[node name="Maxwell" parent="." instance=ExtResource("3_ttl64")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 33, -86, -141)
+
+[node name="Maxwell2" parent="." instance=ExtResource("3_ttl64")]
+transform = Transform3D(-0.406035, 0, 0.291781, 0, 0.5, 0, -0.291781, 0, -0.406035, -28, -126.426, -131)
+
+[node name="Maxwell3" parent="." instance=ExtResource("3_ttl64")]
+transform = Transform3D(-0.406035, 0, 0.291781, 0, 0.5, 0, -0.291781, 0, -0.406035, -16, 1.57416, -194)
