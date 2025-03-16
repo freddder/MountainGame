@@ -1,4 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://b327gfg6ix8c1"]
+[gd_scene load_steps=15 format=3 uid="uid://b327gfg6ix8c1"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_xkkrt"]
+[ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="2_p26qx"]
+[ext_resource type="Texture2D" uid="uid://bqif3h7uckt2a" path="res://UI/keyboard_arrows.png" id="3_xkejx"]
+[ext_resource type="Texture2D" uid="uid://oo4w3lw3mr6o" path="res://UI/switch_stick_r.png" id="4_focda"]
+[ext_resource type="Texture2D" uid="uid://deqyp672mwghp" path="res://UI/keyboard_shift_outline.png" id="5_6dvnr"]
+[ext_resource type="Texture2D" uid="uid://ca2ixggt6exh7" path="res://UI/left_button.png" id="6_iu6yw"]
+[ext_resource type="Texture2D" uid="uid://cohd1aco35t4n" path="res://UI/keyboard_space_outline.png" id="7_minsb"]
+[ext_resource type="Texture2D" uid="uid://c6o8kheae2c38" path="res://UI/bottom_button.png" id="8_7b8ay"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qxotx"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -13,65 +22,16 @@ sky = SubResource("Sky_vp6tf")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="Gradient" id="Gradient_q3kiu"]
-offsets = PackedFloat32Array(0.2, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pj34y"]
-noise_type = 2
-frequency = 0.03
-cellular_jitter = 3.0
-cellular_return_type = 0
-domain_warp_enabled = true
-domain_warp_type = 1
-domain_warp_amplitude = 50.0
-domain_warp_fractal_type = 2
-domain_warp_fractal_lacunarity = 1.5
-domain_warp_fractal_gain = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g73i3"]
-seamless = true
-color_ramp = SubResource("Gradient_q3kiu")
-noise = SubResource("FastNoiseLite_pj34y")
-
-[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_tos20"]
-_shader_parameters = {
-"blend_sharpness": 0.87,
-"height_blending": true,
-"macro_variation1": Color(1, 1, 1, 1),
-"macro_variation2": Color(1, 1, 1, 1),
-"noise1_angle": 0.0,
-"noise1_offset": Vector2(0.5, 0.5),
-"noise1_scale": 0.04,
-"noise2_scale": 0.076,
-"noise3_scale": 0.225,
-"noise_texture": SubResource("NoiseTexture2D_g73i3"),
-"vertex_normals_distance": 128.0
-}
-show_checkered = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pd1r"]
-transparency = 4
-cull_mode = 2
-vertex_color_use_as_albedo = true
-backlight_enabled = true
-backlight = Color(0.5, 0.5, 0.5, 1)
-distance_fade_mode = 1
-distance_fade_min_distance = 85.0
-distance_fade_max_distance = 75.0
-
-[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_a0okq"]
-material_override = SubResource("StandardMaterial3D_3pd1r")
-generated_type = 1
-
-[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_gljd5"]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_a0okq")])
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qjxp5"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_77adg"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_stn15"]
+material = ExtResource("2_p26qx")
+size = Vector2(1000, 1000)
+
 [node name="MainMenu" type="Node3D"]
+script = ExtResource("1_xkkrt")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.334565, 0.371572, -0.204993, 0.915397, 0.346448, -0.456046, 0.223863, -0.861341, 0, 0, 0)
@@ -79,12 +39,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_u8u6l")
-
-[node name="Terrain3D" type="Terrain3D" parent="."]
-material = SubResource("Terrain3DMaterial_tos20")
-assets = SubResource("Terrain3DAssets_gljd5")
-top_level = true
-metadata/_edit_lock_ = true
 
 [node name="Mesh" type="Node3D" parent="."]
 transform = Transform3D(-0.306227, 0, 0.951958, 0, 1, 0, -0.951958, 0, -0.306227, 2, 1, 11)
@@ -97,6 +51,9 @@ skeleton = NodePath("../../Camera3D")
 transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.57242e-09, 0, 0.617955, -0.460826)
 mesh = SubResource("PrismMesh_77adg")
 skeleton = NodePath("../../Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_stn15")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.980942, -0.194303, 0, 0.194303, 0.980942, -1, 1.53519, 15.1874)
@@ -140,12 +97,167 @@ offset_top = 161.0
 offset_right = 244.0
 offset_bottom = 504.0
 
-[node name="Button" type="Button" parent="Control/VBoxContainer"]
+[node name="MainLevelButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Main Level"
 
-[node name="Button2" type="Button" parent="Control/VBoxContainer"]
+[node name="TestLevelButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Test Level"
+
+[node name="ControlsButton" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "Controls"
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -332.0
+offset_top = -163.0
+offset_right = 327.0
+offset_bottom = 234.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.427451)
+
+[node name="Label" type="Label" parent="Control/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.5
+offset_top = 16.0
+offset_right = 63.5
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 31
+text = "Controls"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -124.0
+offset_right = 255.0
+offset_bottom = 124.0
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Walk:"
+
+[node name="TextureRect" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("3_xkejx")
+stretch_mode = 2
+
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "or"
+
+[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_focda")
+stretch_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Run:"
+
+[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("5_6dvnr")
+stretch_mode = 2
+
+[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "or"
+
+[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("6_iu6yw")
+stretch_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Jump/Glide:"
+
+[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("7_minsb")
+stretch_mode = 2
+
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "or"
+
+[node name="TextureRect4" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("8_7b8ay")
+stretch_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Climb: jump on a wall"
+
+[node name="BackButton" type="Button" parent="Control/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -38.5
+offset_top = -62.0
+offset_right = 36.5
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 29
+text = "Back"
+
+[connection signal="pressed" from="Control/VBoxContainer/MainLevelButton" to="." method="_on_main_level_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/TestLevelButton" to="." method="_on_test_level_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="Control/ColorRect/BackButton" to="." method="_on_back_button_pressed"]
