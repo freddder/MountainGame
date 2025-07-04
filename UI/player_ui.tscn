@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cnaeey6ymunui"]
 
 [ext_resource type="Texture2D" uid="uid://cc00vjfwcrses" path="res://UI/StaminaWheel-Empty.png" id="1_25pl0"]
-[ext_resource type="Script" path="res://UI/player_menu.gd" id="1_gws5k"]
+[ext_resource type="Script" uid="uid://cgfex0bldr3du" path="res://UI/player_menu.gd" id="1_gws5k"]
 [ext_resource type="Texture2D" uid="uid://cwb0ptka4xp0a" path="res://UI/StaminaWheel-Full.png" id="2_m7eu7"]
 
 [node name="PlayerUi" type="Control"]
