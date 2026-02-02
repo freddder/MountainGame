@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://b327gfg6ix8c1"]
+[gd_scene format=3 uid="uid://b327gfg6ix8c1"]
 
 [ext_resource type="Script" uid="uid://er3ypxha6kjw" path="res://main_menu.gd" id="1_xkkrt"]
 [ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="2_p26qx"]
+[ext_resource type="PackedScene" uid="uid://ch78hb0nq77at" path="res://TestCSharp.tscn" id="3_dy7ct"]
 [ext_resource type="Texture2D" uid="uid://bqif3h7uckt2a" path="res://UI/keyboard_arrows.png" id="3_xkejx"]
 [ext_resource type="Texture2D" uid="uid://oo4w3lw3mr6o" path="res://UI/switch_stick_r.png" id="4_focda"]
 [ext_resource type="Texture2D" uid="uid://deqyp672mwghp" path="res://UI/keyboard_shift_outline.png" id="5_6dvnr"]
@@ -30,35 +31,38 @@ glow_enabled = true
 material = ExtResource("2_p26qx")
 size = Vector2(1000, 1000)
 
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" unique_id=303268578]
 script = ExtResource("1_xkkrt")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1974247162]
 transform = Transform3D(-0.866025, -0.334565, 0.371572, -0.204993, 0.915397, 0.346448, -0.456046, 0.223863, -0.861341, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=411403770]
 environment = SubResource("Environment_u8u6l")
 
-[node name="Mesh" type="Node3D" parent="."]
+[node name="Mesh" type="Node3D" parent="." unique_id=1927319940]
 transform = Transform3D(-0.306227, 0, 0.951958, 0, 1, 0, -0.951958, 0, -0.306227, 2, 1, 11)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh" unique_id=265198314]
 mesh = SubResource("CapsuleMesh_qjxp5")
 skeleton = NodePath("../../Camera3D")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh" unique_id=23995269]
 transform = Transform3D(0.842792, 0, 0, 0, -4.37114e-08, 0.173237, 0, -1, -7.57242e-09, 0, 0.617955, -0.460826)
 mesh = SubResource("PrismMesh_77adg")
 skeleton = NodePath("../../Camera3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=940889423]
 mesh = SubResource("PlaneMesh_stn15")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1078968038]
 transform = Transform3D(1, 0, 0, 0, 0.980942, -0.194303, 0, 0.194303, 0.980942, -1, 1.53519, 15.1874)
 
-[node name="Control" type="Control" parent="."]
+[node name="TestCSharp" parent="." unique_id=846862847 instance=ExtResource("3_dy7ct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1418934, 2.3841858e-07, 10.993258)
+
+[node name="Control" type="Control" parent="." unique_id=1999522791]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,7 +70,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Control" unique_id=838062010]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 25.0
@@ -75,7 +79,7 @@ offset_bottom = 143.0
 theme_override_font_sizes/font_size = 86
 text = "Movement Demo"
 
-[node name="Label2" type="Label" parent="Control"]
+[node name="Label2" type="Label" parent="Control" unique_id=1565841304]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -90,29 +94,29 @@ text = "v1.0"
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=233082813]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 161.0
 offset_right = 244.0
 offset_bottom = 504.0
 
-[node name="MainLevelButton" type="Button" parent="Control/VBoxContainer"]
+[node name="MainLevelButton" type="Button" parent="Control/VBoxContainer" unique_id=538241576]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Main Level"
 
-[node name="TestLevelButton" type="Button" parent="Control/VBoxContainer"]
+[node name="TestLevelButton" type="Button" parent="Control/VBoxContainer" unique_id=843757984]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Test Level"
 
-[node name="ControlsButton" type="Button" parent="Control/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="Control/VBoxContainer" unique_id=1565575569]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Controls"
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=610596835]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -127,7 +131,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.427451)
 
-[node name="Label" type="Label" parent="Control/ColorRect"]
+[node name="Label" type="Label" parent="Control/ColorRect" unique_id=1952589110]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -140,7 +144,7 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 31
 text = "Controls"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect" unique_id=1951681621]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -152,96 +156,96 @@ offset_bottom = 124.0
 grow_vertical = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer" unique_id=802503870]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer" unique_id=2007277239]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "Walk:"
 
-[node name="TextureRect" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer" unique_id=599197957]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("3_xkejx")
 stretch_mode = 2
 
-[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer" unique_id=132670646]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "or"
 
-[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer" unique_id=1084620442]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("4_focda")
 stretch_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer" unique_id=631932212]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2" unique_id=560739424]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "Run:"
 
-[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2" unique_id=341232803]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("5_6dvnr")
 stretch_mode = 2
 
-[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer2" unique_id=1560211279]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "or"
 
-[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer2" unique_id=1721068168]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("6_iu6yw")
 stretch_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer" unique_id=1152207455]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+[node name="Label3" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3" unique_id=1237615758]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "Jump/Glide:"
 
-[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+[node name="TextureRect3" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3" unique_id=965079168]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("7_minsb")
 stretch_mode = 2
 
-[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+[node name="Label2" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer3" unique_id=930491677]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "or"
 
-[node name="TextureRect4" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3"]
+[node name="TextureRect4" type="TextureRect" parent="Control/ColorRect/VBoxContainer/HBoxContainer3" unique_id=1366693975]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 texture = ExtResource("8_7b8ay")
 stretch_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/ColorRect/VBoxContainer" unique_id=107888229]
 layout_mode = 2
 
-[node name="Label4" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer4"]
+[node name="Label4" type="Label" parent="Control/ColorRect/VBoxContainer/HBoxContainer4" unique_id=1044724434]
 layout_mode = 2
 theme_override_font_sizes/font_size = 31
 text = "Climb: jump on a wall"
 
-[node name="BackButton" type="Button" parent="Control/ColorRect"]
+[node name="BackButton" type="Button" parent="Control/ColorRect" unique_id=309330297]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
