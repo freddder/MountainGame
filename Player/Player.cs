@@ -51,8 +51,6 @@ public partial class Player : CharacterBody3D
 				wallChecks.Add(raycast);
 			}
 		}
-
-		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 	
 	public override void _Process(double delta)
@@ -78,12 +76,6 @@ public partial class Player : CharacterBody3D
 		else
 		{
 			staminaWheel.Visible = true;
-		}
-
-		if (Input.IsActionJustPressed("pause"))
-		{
-			Input.MouseMode = Input.MouseModeEnum.Visible;
-			GetTree().Paused = true;
 		}
 	}
 
