@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b327gfg6ix8c1"]
 
-[ext_resource type="Script" uid="uid://er3ypxha6kjw" path="res://main_menu.gd" id="1_xkkrt"]
+[ext_resource type="Script" uid="uid://bqtm30aivq04s" path="res://MainMenu.cs" id="1_8qtwp"]
 [ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="2_p26qx"]
 [ext_resource type="Texture2D" uid="uid://bqif3h7uckt2a" path="res://UI/keyboard_arrows.png" id="3_xkejx"]
 [ext_resource type="Texture2D" uid="uid://oo4w3lw3mr6o" path="res://UI/switch_stick_r.png" id="4_focda"]
@@ -31,7 +31,7 @@ material = ExtResource("2_p26qx")
 size = Vector2(1000, 1000)
 
 [node name="MainMenu" type="Node3D" unique_id=303268578]
-script = ExtResource("1_xkkrt")
+script = ExtResource("1_8qtwp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1974247162]
 transform = Transform3D(-0.866025, -0.334565, 0.371572, -0.204993, 0.915397, 0.346448, -0.456046, 0.223863, -0.861341, 0, 0, 0)
@@ -256,8 +256,3 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 29
 text = "Back"
-
-[connection signal="pressed" from="Control/VBoxContainer/MainLevelButton" to="." method="_on_main_level_button_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/TestLevelButton" to="." method="_on_test_level_button_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
-[connection signal="pressed" from="Control/ColorRect/BackButton" to="." method="_on_back_button_pressed"]
