@@ -60,7 +60,7 @@ public partial class PlayerMenu : Control
 	private void PauseToggle()
 	{
 		isPaused = !isPaused;
-		GetTree().Paused = isPaused;
+		//GetTree().Paused = isPaused;
 		buttonsMenu.Visible = isPaused;
 		Input.MouseMode = isPaused ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Captured;;
 	}

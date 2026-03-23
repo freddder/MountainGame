@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Player : CharacterBody3D
 {
@@ -26,13 +27,15 @@ public partial class Player : CharacterBody3D
 	private PlayerMenu playerMenu;
 	private List<RayCast3D> wallChecks;
 
+	[Export]
+	private ExpandingBlockPreview block;
+
 	public override void _Ready()
 	{
 		cameraTarget = GetNode<Node3D>("CameraTarget");
 		topChecksParent = GetNode<Node3D>("Mesh/UpperChecks");
 		botChecksParent = GetNode<Node3D>("Mesh/BottomChecks");
 		staminaWheel = GetNode<TextureProgressBar>("PlayerUi/StaminaWheel");
-		//playerMenu = GetNode<PlayerMenu>("PlayerUi");
 		wallChecks = new List<RayCast3D>();
 
 		stamina = maxStamina;
@@ -55,10 +58,39 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Process(double delta)
 	{
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var cam = GetNode<Camera3D>("CameraTarget/SpringArm3D/Camera3D");
+		var mousePos = GetViewport().GetMousePosition();
+
+		var origin = cam.ProjectRayOrigin(mousePos);
+		var end = origin + cam.ProjectRayNormal(mousePos) * 1000f;
+		var query = PhysicsRayQueryParameters3D.Create(origin, end);
+		var result = spaceState.IntersectRay(query);
+		if (result.Any())
+		{
+			block.GlobalPosition = (Vector3)result["position"];
+			Vector3 normal = (Vector3)result["normal"];
+			
+			Vector3 forward = Vector3.Forward;
+			if (Mathf.Abs(normal.Dot(forward)) > 0.99f)
+			{
+    			forward = Vector3.Right; // fallback if too parallel
+			}
+
+			// Build orthonormal basis
+			Vector3 right = forward.Cross(normal).Normalized();
+			forward = normal.Cross(right).Normalized();
+
+			Basis basis = new Basis(right, normal, forward);
+			Transform3D transform = block.Transform;
+			transform.Basis = basis;
+			block.Transform = transform;
+		}
+
 		Vector2 cameraStick = Input.GetVector("camera_left", "camera_right", "camera_forward", "camera_back");
 		float x = cameraTarget.Rotation.X - cameraStick.Y * cameraControllerSensitivity;
 		float y = cameraTarget.Rotation.Y - cameraStick.X * cameraControllerSensitivity;
-		x = Mathf.Clamp(x, -Mathf.DegToRad(85), Mathf.DegToRad(65));
+		x = Mathf.Clamp(x, -Mathf.DegToRad(85f), Mathf.DegToRad(65f));
 		cameraTarget.Rotation = new Vector3(x, y, cameraTarget.Rotation.Z);
 
 		if (staminaWheel.Value == 100)
