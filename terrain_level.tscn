@@ -40,17 +40,22 @@ seamless = true
 
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_p6mkm"]
 _shader_parameters = {
+&"bias_distance": 512.0,
 "blend_sharpness": 0.87,
-"height_blending": true,
+&"depth_blur": 0.0,
+&"enable_macro_variation": true,
+&"enable_projection": true,
+&"flat_terrain_normals": false,
 "macro_variation1": Color(1, 1, 1, 1),
 "macro_variation2": Color(1, 1, 1, 1),
+&"macro_variation_slope": 0.333,
+&"mipmap_bias": 1.0,
 "noise1_angle": 0.0,
 "noise1_offset": Vector2(0.5, 0.5),
 "noise1_scale": 0.04,
 "noise2_scale": 0.076,
-"noise3_scale": 0.225,
 "noise_texture": SubResource("NoiseTexture2D_ecfa4"),
-"vertex_normals_distance": 128.0
+&"projection_threshold": 0.8
 }
 show_checkered = true
 
@@ -65,8 +70,12 @@ distance_fade_min_distance = 85.0
 distance_fade_max_distance = 75.0
 
 [sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_vbqrh"]
-material_override = SubResource("StandardMaterial3D_dolv1")
 generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_dolv1")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
 
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_f5hew"]
 mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_vbqrh")])
@@ -84,6 +93,9 @@ shadow_enabled = true
 data_directory = "res://terrain_level_data"
 material = SubResource("Terrain3DMaterial_p6mkm")
 assets = SubResource("Terrain3DAssets_f5hew")
+collision_layer = 2
+collision_mask = 0
+show_checkered = true
 top_level = true
 metadata/_edit_lock_ = true
 
@@ -93,6 +105,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -146, -36)
 [node name="Castle" type="CSGCombiner3D" parent="." unique_id=490544428]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -150, 1)
 use_collision = true
+collision_layer = 2
+collision_mask = 0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Castle" unique_id=1872711777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -138, 17, 0)
@@ -192,6 +206,8 @@ material = ExtResource("2_w0cog")
 [node name="Path" type="CSGCombiner3D" parent="." unique_id=293486017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -106, -143)
 use_collision = true
+collision_layer = 2
+collision_mask = 0
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Path" unique_id=725714661]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 16, -13)
