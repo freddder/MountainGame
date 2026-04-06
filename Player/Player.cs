@@ -20,6 +20,7 @@ public partial class Player : CharacterBody3D
 	public bool isExhausted = false;
 	private float wheelVisibleTimer = 2f;
 
+	private StateMachine stateMachine;
 	private Node3D cameraTarget;
 	private Node3D topChecksParent;
 	private Node3D botChecksParent;
@@ -32,6 +33,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
+		stateMachine = GetNode<StateMachine>("StateMachine");
 		cameraTarget = GetNode<Node3D>("CameraTarget");
 		topChecksParent = GetNode<Node3D>("Mesh/UpperChecks");
 		botChecksParent = GetNode<Node3D>("Mesh/BottomChecks");
@@ -64,7 +66,7 @@ public partial class Player : CharacterBody3D
 
 		var origin = cam.ProjectRayOrigin(mousePos);
 		var end = origin + cam.ProjectRayNormal(mousePos) * 1000f;
-		var query = PhysicsRayQueryParameters3D.Create(origin, end);
+		var query = PhysicsRayQueryParameters3D.Create(origin, end, 2); // 2 = terrain layer
 		var result = spaceState.IntersectRay(query);
 		if (result.Any())
 		{
@@ -87,12 +89,14 @@ public partial class Player : CharacterBody3D
 			block.Transform = transform;
 		}
 
+		// Camera movement
 		Vector2 cameraStick = Input.GetVector("camera_left", "camera_right", "camera_forward", "camera_back");
 		float x = cameraTarget.Rotation.X - cameraStick.Y * cameraControllerSensitivity;
 		float y = cameraTarget.Rotation.Y - cameraStick.X * cameraControllerSensitivity;
 		x = Mathf.Clamp(x, -Mathf.DegToRad(85f), Mathf.DegToRad(65f));
 		cameraTarget.Rotation = new Vector3(x, y, cameraTarget.Rotation.Z);
 
+		// Stamina visibility
 		if (staminaWheel.Value == 100)
 		{
 			if  (staminaWheel.Visible)
@@ -191,5 +195,15 @@ public partial class Player : CharacterBody3D
 
 		stamina = Mathf.Clamp(stamina, 0f, maxStamina);
 		staminaWheel.Value = stamina;
+	}
+
+	public void ChangeState(string newState)
+	{
+		stateMachine.ChangeState(newState);
+	}
+
+	public State GetCurrentState()
+	{
+		return stateMachine.currState;
 	}
 }

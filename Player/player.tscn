@@ -23,6 +23,7 @@ albedo_color = Color(0, 1, 0, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_u1kto"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1440127255]
+collision_mask = 3
 floor_snap_length = 0.4
 script = ExtResource("1_fhl08")
 
@@ -52,52 +53,63 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.496725, 0)
 
 [node name="Front" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=1359770599]
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Right45" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=342663911]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Right90" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=851853216]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Left45" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=989963513]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Left90" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=2007793133]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="BottomChecks" type="Node3D" parent="Mesh" unique_id=2045363145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00268364, -0.765419, -0.00119472)
 
 [node name="Front" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=1977828287]
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Right45" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=1313647202]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Right90" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=2031674907]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Left45" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=1858784989]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="Left90" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=2087728987]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=247499325]
 shape = SubResource("CapsuleShape3D_4lit3")
 
 [node name="CameraTarget" type="Node3D" parent="." unique_id=532883073]
-transform = Transform3D(1, 0, 0, 0, 0.99961, -0.0279216, 0, 0.0279216, 0.99961, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99961, -0.0279216, 0, 0.0279216, 0.99961, 0, 1.2427222, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraTarget" unique_id=1894666868]
+collision_mask = 3
 shape = SubResource("SphereShape3D_u1kto")
 spring_length = 5.5
 

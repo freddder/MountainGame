@@ -50,12 +50,12 @@ public partial class PlayerAirborne : State
 	}
 
 	public override void Update(double delta)
-	{        
+	{
 	}
 
 	public override void PhysicsUpdate(double delta)
 	{
-		if (player.IsOnFloor())
+		if (player.IsOnFloor() && player.Velocity.Y <= 0f)
 		{
 			EmitSignalChangeState("grounded");
 			return;

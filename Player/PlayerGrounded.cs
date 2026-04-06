@@ -23,11 +23,11 @@ public partial class PlayerGrounded : State
 	private float runStaminaReductionRate = 20f;
 	private bool isRunning = false;
 
-	private Player player; // = $"../.."
-	private Node3D cameraTarget; //$"../../CameraTarget"
-	private Node3D mesh; //$"../../Mesh"
-	private CollisionShape3D collisionShape; // $"../../CollisionShape3D"
-	private MeshInstance3D debugSphere; // $"../../Mesh/DebugSphere"
+	private Player player;
+	private Node3D cameraTarget;
+	private Node3D mesh;
+	private CollisionShape3D collisionShape;
+	private MeshInstance3D debugSphere;
 
 	public override void _Ready()
 	{
@@ -41,10 +41,10 @@ public partial class PlayerGrounded : State
 
 	public override void Enter()
 	{
-		Vector3 lookPos = player.GlobalPosition + player.Velocity;
-		lookPos.Y = player.GlobalPosition.Y;
-		mesh.LookAt(lookPos);
-		collisionShape.LookAt(lookPos);
+		//Vector3 lookPos = player.GlobalPosition + player.Velocity;
+		//lookPos.Y = player.GlobalPosition.Y;
+		//mesh.LookAt(lookPos);
+		//collisionShape.LookAt(lookPos);
 	}
 
 	public override void Exit()

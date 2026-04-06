@@ -3,6 +3,8 @@ using System;
 
 public partial class ExpandingBlockPreview : Node3D
 {
+	private PackedScene expandingBlockScene = GD.Load<PackedScene>("res://Gameplay/expanding_block.tscn");
+
 	[Export]
 	private float sideSize = 3f;
 	[Export]
@@ -21,6 +23,7 @@ public partial class ExpandingBlockPreview : Node3D
 		{
 			terrainRaycasts[i] = new RayCast3D();
 			terrainRaycasts[i].Position = Vector3.Up * raycastStartHeight;
+			terrainRaycasts[i].CollisionMask = 2;
 
 			float x = i < 2 ? sideSize * 0.5f : sideSize * -0.5f;
 			float z = i % 2 == 0 ? sideSize * 0.5f : sideSize * -0.5f;
@@ -33,23 +36,27 @@ public partial class ExpandingBlockPreview : Node3D
 
 	public override void _Process(double delta)
 	{
-		bool good = true;
+		if (Input.IsActionJustPressed("use_item") && CanSpawnBlock())
+		{
+			Node3D n = expandingBlockScene.Instantiate() as Node3D;
+			n.Transform = Transform;
+			GetTree().Root.AddChild(n);
+		}
+	}
+
+	public bool CanSpawnBlock()
+	{
 		for (int i = 0; i < 4; i++)
 		{
 			if (!terrainRaycasts[i].IsColliding())
-			{
-				good = false;
-				break;
-			}
+				return false;
 			
 			Vector3 normal = terrainRaycasts[i].GetCollisionNormal();
 			float dot = normal.Dot(-Transform.Basis.Y);
 			if (-dot < flatSurfaceThreshold)
-			{
-				good = false;
-				break;
-			}
+				return false;
 		}
-		GD.Print(good);
+
+		return true;
 	}
 }

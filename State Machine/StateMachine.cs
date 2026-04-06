@@ -5,7 +5,7 @@ public partial class StateMachine : Node
 {
 	[Export]
 	private State initialState = null;
-	private State currState = null;
+	public State currState { get; private set; } = null;
 	private Dictionary<string, State> states;
 
 	public override void _Ready()
