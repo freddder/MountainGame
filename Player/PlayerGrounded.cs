@@ -25,16 +25,12 @@ public partial class PlayerGrounded : State
 
 	private Player player;
 	private Node3D cameraTarget;
-	private Node3D mesh;
-	private CollisionShape3D collisionShape;
 	private MeshInstance3D debugSphere;
 
 	public override void _Ready()
 	{
 		player = GetNode<Player>("../..");
 		cameraTarget = GetNode<Node3D>("../../CameraTarget");
-		mesh = GetNode<Node3D>("../../Mesh");
-		collisionShape = GetNode<CollisionShape3D>("../../CollisionShape3D");
 		debugSphere = GetNode<MeshInstance3D>("../../Mesh/DebugSphere");
 	}
 
@@ -68,17 +64,17 @@ public partial class PlayerGrounded : State
 		if (inputDir != Vector2.Zero)
 		{
 			float targetRotation = Mathf.Atan2(-targetHorizontalVelocity.X, -targetHorizontalVelocity.Z);
-			float angleDiff = Mathf.AngleDifference(mesh.Rotation.Y, targetRotation);
+			float angleDiff = Mathf.AngleDifference(player.Rotation.Y, targetRotation);
 			float step = isRunning ? runTurnSpeed * (float)delta : walkTurnSpeed * (float)delta;
-			Vector3 rot = mesh.Rotation;
+			Vector3 rot = player.Rotation;
 			rot.Y += Mathf.Clamp(angleDiff, -step, step);
 			rot.Y = rot.Y % float.Tau;
-			mesh.Rotation = rot;
+			player.Rotation = rot;
 		}
 
 		// Horizontal velocity
 		float currSpeed = new Vector3(player.Velocity.X, 0f, player.Velocity.Z).Length();
-		Vector3 horizontalVelocity = -mesh.GlobalBasis.Z * Mathf.Lerp(currSpeed, targetHorizontalVelocity.Length(), walkAcceleration * (float)delta);
+		Vector3 horizontalVelocity = -player.GlobalBasis.Z * Mathf.Lerp(currSpeed, targetHorizontalVelocity.Length(), walkAcceleration * (float)delta);
 
 		// Vertical velocity
 		KinematicCollision3D collision = player.GetBestWallCollision();

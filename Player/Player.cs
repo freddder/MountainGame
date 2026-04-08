@@ -22,6 +22,7 @@ public partial class Player : CharacterBody3D
 
 	private StateMachine stateMachine;
 	private Node3D cameraTarget;
+	private Vector3 cameraTargetStartingPos;
 	private Node3D topChecksParent;
 	private Node3D botChecksParent;
 	private TextureProgressBar staminaWheel;
@@ -40,6 +41,7 @@ public partial class Player : CharacterBody3D
 		staminaWheel = GetNode<TextureProgressBar>("PlayerUi/StaminaWheel");
 		wallChecks = new List<RayCast3D>();
 
+		cameraTargetStartingPos = cameraTarget.Position;
 		stamina = maxStamina;
 
 		foreach (Node check in topChecksParent.GetChildren())
@@ -90,6 +92,7 @@ public partial class Player : CharacterBody3D
 		}
 
 		// Camera movement
+		cameraTarget.Position = Position + cameraTargetStartingPos;
 		Vector2 cameraStick = Input.GetVector("camera_left", "camera_right", "camera_forward", "camera_back");
 		float x = cameraTarget.Rotation.X - cameraStick.Y * cameraControllerSensitivity;
 		float y = cameraTarget.Rotation.Y - cameraStick.X * cameraControllerSensitivity;

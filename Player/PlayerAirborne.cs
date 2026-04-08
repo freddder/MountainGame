@@ -25,14 +25,12 @@ public partial class PlayerAirborne : State
 	private float glideActionBufferTimer = 0.3f;
 
 	private Player player;
-	private Node3D mesh;
 	private Node3D cameraTarget;
 	private MeshInstance3D wings;
 
 	public override void _Ready()
 	{
 		player = GetNode<Player>("../..");
-		mesh = GetNode<Node3D>("../../Mesh");
 		cameraTarget = GetNode<Node3D>("../../CameraTarget");
 		wings = GetNode<MeshInstance3D>("../../Mesh/Wings");
 	}
@@ -100,8 +98,8 @@ public partial class PlayerAirborne : State
 				targetHorizontalVelocity = targetHorizontalVelocity * glideHorizontalSpeed;
 
 				float lookAngle = Mathf.Atan2(-targetHorizontalVelocity.X, -targetHorizontalVelocity.Z);
-				float rotY = Mathf.LerpAngle(mesh.Rotation.Y, lookAngle, glideTurnAcceleration * (float)delta);
-				mesh.Rotation = new Vector3(mesh.Rotation.X, rotY, mesh.Rotation.Z);
+				float rotY = Mathf.LerpAngle(player.Rotation.Y, lookAngle, glideTurnAcceleration * (float)delta);
+				player.Rotation = new Vector3(player.Rotation.X, rotY, player.Rotation.Z);
 			}
 
 			vel = currHorizontalVelocity.Lerp(targetHorizontalVelocity, glideHorizontalAcceleration * (float)delta);

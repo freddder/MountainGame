@@ -13,15 +13,11 @@ public partial class PlayerClimb : State
 	private bool isJumping = false;
 
 	private Player player;
-	private Node3D mesh;
-	private CollisionShape3D collisionShape;
 	private Node3D debugSphere;
 
 	public override void _Ready()
 	{
 		player = GetNode<Player>("../..");
-		mesh = GetNode<Node3D>("../../Mesh");
-		collisionShape = GetNode<CollisionShape3D>("../../CollisionShape3D");
 		debugSphere = GetNode<Node3D>("../../Mesh/DebugSphere");
 	}
 
@@ -34,8 +30,7 @@ public partial class PlayerClimb : State
 	{
 		isJumping = false;
 		debugSphere.GlobalPosition = player.GlobalPosition;
-		mesh.Rotation = new Vector3(0f, mesh.Rotation.Y, mesh.Rotation.Z);
-		collisionShape.GlobalRotation = new Vector3(0f, collisionShape.GlobalRotation.Y, collisionShape.GlobalRotation.Z);
+		player.Rotation = new Vector3(0f, player.Rotation.Y, player.Rotation.Z);
 	}
 
 	public override void Update(double delta)
@@ -67,7 +62,7 @@ public partial class PlayerClimb : State
 			Vector2 jumpHorizontalDir = new Vector2(normal.X, normal.Z).Normalized();
 			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * jumpForce;
 			player.Velocity = jumpDir;
-			mesh.LookAt(player.GlobalPosition + normal);
+			player.LookAt(player.GlobalPosition + normal);
 			EmitSignalChangeState("airborne");
 			return;
 		}
@@ -80,8 +75,7 @@ public partial class PlayerClimb : State
 			player.Velocity = climbDir * climbSpeed;
 			player.Velocity += -normal.Normalized(); // Slightly push player towards the wall
 
-			mesh.LookAt(player.GlobalPosition - normal);
-			collisionShape.LookAt(player.GlobalPosition - normal);
+			player.LookAt(player.GlobalPosition - normal);
 
 			player.AddStaminaAmount(-climbStaminaReductionRate * (float)delta);
 		}
