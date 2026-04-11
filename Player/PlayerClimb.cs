@@ -75,7 +75,8 @@ public partial class PlayerClimb : State
 			player.Velocity = climbDir * climbSpeed;
 			player.Velocity += -normal.Normalized(); // Slightly push player towards the wall
 
-			player.LookAt(player.GlobalPosition - normal);
+			Quaternion targetQuaternion = new Quaternion(Basis.LookingAt(-normal));
+			player.Quaternion = player.Quaternion.Slerp(targetQuaternion, (float)delta * 20f);
 
 			player.AddStaminaAmount(-climbStaminaReductionRate * (float)delta);
 		}
