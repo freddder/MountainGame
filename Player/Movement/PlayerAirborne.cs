@@ -3,22 +3,6 @@ using System;
 
 public partial class PlayerAirborne : State
 {
-	[ExportGroup("Movement")]
-	[Export]
-	private float fallAcceleration = 45f;
-	[Export]
-	private float maxFallSpeed = 75f;
-	[ExportGroup("Glide")]
-	[Export]
-	private float glideFallSpeed = 4f;
-	[Export]
-	private float glideHorizontalSpeed = 8f;
-	[Export]
-	private float glideHorizontalAcceleration = 8f;
-	[Export]
-	private float glideTurnAcceleration = 1f;
-	[Export]
-	private float glideStaminaReductionRate = 5f;
 	private bool isGliding = false;
 	private float glideTurnSpeed = 0f;
 	private bool isGlideActionBuffered = false;
@@ -27,6 +11,8 @@ public partial class PlayerAirborne : State
 	private Player player;
 	private Node3D cameraTarget;
 	private MeshInstance3D wings;
+
+	private MovementSettings ms { get { return player.movementSettings; } }
 
 	public override void _Ready()
 	{
@@ -95,18 +81,18 @@ public partial class PlayerAirborne : State
 			if (inputDir != Vector2.Zero)
 			{
 				targetHorizontalVelocity = new Vector3(inputDir.X, 0f, inputDir.Y).Rotated(Vector3.Up, cameraTarget.Rotation.Y);
-				targetHorizontalVelocity = targetHorizontalVelocity * glideHorizontalSpeed;
+				targetHorizontalVelocity = targetHorizontalVelocity * ms.glideHorizontalSpeed;
 
 				float lookAngle = Mathf.Atan2(-targetHorizontalVelocity.X, -targetHorizontalVelocity.Z);
-				float rotY = Mathf.LerpAngle(player.Rotation.Y, lookAngle, glideTurnAcceleration * (float)delta);
+				float rotY = Mathf.LerpAngle(player.Rotation.Y, lookAngle, ms.glideTurnAcceleration * (float)delta);
 				player.Rotation = new Vector3(player.Rotation.X, rotY, player.Rotation.Z);
 			}
 
-			vel = currHorizontalVelocity.Lerp(targetHorizontalVelocity, glideHorizontalAcceleration * (float)delta);
-			vel.Y = player.Velocity.Y + (-fallAcceleration * (float)delta);
-			vel.Y = Mathf.Clamp(vel.Y, -glideFallSpeed, glideFallSpeed);
+			vel = currHorizontalVelocity.Lerp(targetHorizontalVelocity, ms.glideHorizontalAcceleration * (float)delta);
+			vel.Y = player.Velocity.Y + (-ms.fallAcceleration * (float)delta);
+			vel.Y = Mathf.Clamp(vel.Y, -ms.glideFallSpeed, ms.glideFallSpeed);
 
-			player.AddStaminaAmount(-glideStaminaReductionRate * (float)delta);
+			player.AddStaminaAmount(-ms.glideStaminaReductionRate * (float)delta);
 			if (player.isExhausted)
 			{
 				ToggleGliding();
@@ -114,8 +100,8 @@ public partial class PlayerAirborne : State
 		}
 		else
 		{
-			vel.Y = player.Velocity.Y + (-fallAcceleration * (float)delta);
-			vel.Y = Mathf.Clamp(vel.Y, -maxFallSpeed, maxFallSpeed);
+			vel.Y = player.Velocity.Y + (-ms.fallAcceleration * (float)delta);
+			vel.Y = Mathf.Clamp(vel.Y, -ms.maxFallSpeed, ms.maxFallSpeed);
 		}
 		player.Velocity = vel;
 	}

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bi6hn2a3saj8w"]
 
-[ext_resource type="Script" uid="uid://bwhv277pgccns" path="res://Gameplay/ExpandingBlock.cs" id="1_y8s2t"]
+[ext_resource type="Script" uid="uid://bwhv277pgccns" path="res://Gameplay/Expanding Block/ExpandingBlock.cs" id="1_y8s2t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_602yd"]
 resource_local_to_scene = true

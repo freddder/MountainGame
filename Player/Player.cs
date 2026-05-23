@@ -5,6 +5,9 @@ using System.Linq;
 
 public partial class Player : CharacterBody3D
 {
+	[Export]
+	public MovementSettings movementSettings { get; private set; }
+
 	[ExportGroup("Camera")]
 	[Export]
 	private float cameraMouseSensitivity = 0.003f;
@@ -14,8 +17,6 @@ public partial class Player : CharacterBody3D
 	[ExportGroup("Stamina")]
 	[Export]
 	private float maxStamina = 100f;
-	[Export]
-	private float staminaRecoveryRate = 25f;
 	private float stamina;
 	public bool isExhausted = false;
 	private float wheelVisibleTimer = 2f;

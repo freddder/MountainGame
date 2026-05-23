@@ -3,29 +3,13 @@ using System;
 
 public partial class PlayerGrounded : State
 {
-	[Export]
-	private float staminaRecoveryRate = 25f;
-
-	[ExportGroup("Walking")]
-	[Export]
-	private float maxWalkSpeed = 5f;
-	[Export]
-	private float walkTurnSpeed = 7f;
-	[Export]
-	private float walkAcceleration = 20f;
-
-	[ExportGroup("Running")]
-	[Export]
-	private float maxRunSpeed = 10f;
-	[Export]
-	private float runTurnSpeed = 4f;
-	[Export]
-	private float runStaminaReductionRate = 20f;
 	private bool isRunning = false;
 
 	private Player player;
 	private Node3D cameraTarget;
 	private MeshInstance3D debugSphere;
+
+	private MovementSettings ms { get { return player.movementSettings; } }
 
 	public override void _Ready()
 	{
@@ -59,13 +43,13 @@ public partial class PlayerGrounded : State
 		Vector2 inputDir = player.GetInputDir();
 		isRunning = player.isExhausted ? false : Input.IsActionPressed("run") && inputDir != Vector2.Zero;
 		Vector3 targetHorizontalVelocity = new Vector3(inputDir.X, 0f, inputDir.Y).Rotated(Vector3.Up, cameraTarget.Rotation.Y);
-		targetHorizontalVelocity *= isRunning ? maxRunSpeed : maxWalkSpeed;
+		targetHorizontalVelocity *= isRunning ? ms.maxRunSpeed : ms.maxWalkSpeed;
 
 		if (inputDir != Vector2.Zero)
 		{
 			float targetRotation = Mathf.Atan2(-targetHorizontalVelocity.X, -targetHorizontalVelocity.Z);
 			float angleDiff = Mathf.AngleDifference(player.Rotation.Y, targetRotation);
-			float step = isRunning ? runTurnSpeed * (float)delta : walkTurnSpeed * (float)delta;
+			float step = isRunning ? ms.runTurnSpeed * (float)delta : ms.walkTurnSpeed * (float)delta;
 			Vector3 rot = player.Rotation;
 			rot.Y += Mathf.Clamp(angleDiff, -step, step);
 			rot.Y = rot.Y % float.Tau;
@@ -74,7 +58,7 @@ public partial class PlayerGrounded : State
 
 		// Horizontal velocity
 		float currSpeed = new Vector3(player.Velocity.X, 0f, player.Velocity.Z).Length();
-		Vector3 horizontalVelocity = -player.GlobalBasis.Z * Mathf.Lerp(currSpeed, targetHorizontalVelocity.Length(), walkAcceleration * (float)delta);
+		Vector3 horizontalVelocity = -player.GlobalBasis.Z * Mathf.Lerp(currSpeed, targetHorizontalVelocity.Length(), ms.walkAcceleration * (float)delta);
 
 		// Vertical velocity
 		KinematicCollision3D collision = player.GetBestWallCollision();
@@ -90,11 +74,11 @@ public partial class PlayerGrounded : State
 
 		if (isRunning)
 		{
-			player.AddStaminaAmount(-runStaminaReductionRate * (float)delta);
+			player.AddStaminaAmount(-ms.runStaminaReductionRate * (float)delta);
 		}
 		else
 		{
-			player.AddStaminaAmount(staminaRecoveryRate * (float)delta);
+			player.AddStaminaAmount(ms.staminaRecoveryRate * (float)delta);
 		}
 	}
 

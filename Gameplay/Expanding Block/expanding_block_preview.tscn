@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dso12aaw6quw0"]
 
-[ext_resource type="Script" uid="uid://ddsojh6lvj5g5" path="res://Gameplay/ExpandingBlockPreview.cs" id="1_frj4r"]
+[ext_resource type="Script" uid="uid://ddsojh6lvj5g5" path="res://Gameplay/Expanding Block/ExpandingBlockPreview.cs" id="1_frj4r"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_frj4r"]
 

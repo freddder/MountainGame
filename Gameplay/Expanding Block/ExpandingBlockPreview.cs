@@ -3,7 +3,7 @@ using System;
 
 public partial class ExpandingBlockPreview : Node3D
 {
-	private PackedScene expandingBlockScene = GD.Load<PackedScene>("res://Gameplay/expanding_block.tscn");
+	private PackedScene expandingBlockScene = GD.Load<PackedScene>("res://Gameplay/Expanding Block/expanding_block.tscn");
 
 	[Export]
 	private float sideSize = 3f;

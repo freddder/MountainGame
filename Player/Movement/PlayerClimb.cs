@@ -3,17 +3,12 @@ using System;
 
 public partial class PlayerClimb : State
 {
-	[Export]
-	private float climbSpeed = 3f;
-	[Export]
-	private float jumpForce = 10f;
-	[Export]
-	private float climbStaminaReductionRate = 16f;
-
 	private bool isJumping = false;
 
 	private Player player;
 	private Node3D debugSphere;
+
+	private MovementSettings ms { get { return player.movementSettings; } }
 
 	public override void _Ready()
 	{
@@ -60,7 +55,7 @@ public partial class PlayerClimb : State
 		{
 			isJumping = true;
 			Vector2 jumpHorizontalDir = new Vector2(normal.X, normal.Z).Normalized();
-			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * jumpForce;
+			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * ms.jumpForce;
 			player.Velocity = jumpDir;
 			player.LookAt(player.GlobalPosition + normal);
 			EmitSignalChangeState("airborne");
@@ -72,13 +67,13 @@ public partial class PlayerClimb : State
 			Vector3 wallRight = Vector3.Up.Cross(normal).Normalized(); // Right direction relative to the wall
 			Vector3 wallUp = normal.Cross(wallRight).Normalized(); // Up direction along the wall
 			Vector3 climbDir = wallRight * inputDir.X + wallUp * -inputDir.Y;
-			player.Velocity = climbDir * climbSpeed;
+			player.Velocity = climbDir * ms.climbSpeed;
 			player.Velocity += -normal.Normalized(); // Slightly push player towards the wall
 
 			Quaternion targetQuaternion = new Quaternion(Basis.LookingAt(-normal));
 			player.Quaternion = player.Quaternion.Slerp(targetQuaternion, (float)delta * 20f);
 
-			player.AddStaminaAmount(-climbStaminaReductionRate * (float)delta);
+			player.AddStaminaAmount(-ms.climbStaminaReductionRate * (float)delta);
 		}
 		else
 		{
