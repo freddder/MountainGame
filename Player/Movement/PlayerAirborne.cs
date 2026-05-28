@@ -74,7 +74,7 @@ public partial class PlayerAirborne : State
 		Vector3 vel = player.Velocity;
 		if (isGliding)
 		{
-			Vector2 inputDir = player.GetInputDir();
+			Vector2 inputDir = player.GetMoveInputDir();
 			Vector3 targetHorizontalVelocity = Vector3.Zero;
 			Vector3 currHorizontalVelocity = player.Velocity;
 			currHorizontalVelocity.Y = 0f;

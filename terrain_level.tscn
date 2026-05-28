@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://4wvwyli1pm5a" path="res://Player/player.tscn" id="1_c17g0"]
 [ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="2_w0cog"]
 [ext_resource type="PackedScene" uid="uid://bemrwdk0pt4p0" path="res://Maxwell/maxwell.tscn" id="3_ttl64"]
+[ext_resource type="PackedScene" uid="uid://dso12aaw6quw0" path="res://Gameplay/Expanding Block/expanding_block_preview.tscn" id="4_6gls5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_akpx0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -99,8 +100,9 @@ show_checkered = true
 top_level = true
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." unique_id=1652126102 instance=ExtResource("1_c17g0")]
+[node name="Player" parent="." unique_id=1652126102 node_paths=PackedStringArray("blockPreview") instance=ExtResource("1_c17g0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -146, -36)
+blockPreview = NodePath("../ExpandingBlockPreview")
 
 [node name="Castle" type="CSGCombiner3D" parent="." unique_id=490544428]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -150, 1)
@@ -343,3 +345,6 @@ transform = Transform3D(-0.406035, 0, 0.291781, 0, 0.5, 0, -0.291781, 0, -0.4060
 
 [node name="Maxwell3" parent="." unique_id=727956093 instance=ExtResource("3_ttl64")]
 transform = Transform3D(-0.406035, 0, 0.291781, 0, 0.5, 0, -0.291781, 0, -0.406035, -16, 1.57416, -194)
+
+[node name="ExpandingBlockPreview" parent="." unique_id=1269388242 instance=ExtResource("4_6gls5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4033086, -146.05913, -33.26553)

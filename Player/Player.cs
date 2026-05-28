@@ -7,6 +7,8 @@ public partial class Player : CharacterBody3D
 {
 	[Export]
 	public MovementSettings movementSettings { get; private set; }
+	[Export]
+	private ExpandingBlockPreview blockPreview;
 
 	[ExportGroup("Camera")]
 	[Export]
@@ -18,7 +20,7 @@ public partial class Player : CharacterBody3D
 	[Export]
 	private float maxStamina = 100f;
 	private float stamina;
-	public bool isExhausted = false;
+	public bool isExhausted { get; private set; } = false;
 	private float wheelVisibleTimer = 2f;
 
 	private StateMachine stateMachine;
@@ -29,9 +31,6 @@ public partial class Player : CharacterBody3D
 	private TextureProgressBar staminaWheel;
 	private PlayerMenu playerMenu;
 	private List<RayCast3D> wallChecks;
-
-	[Export]
-	private ExpandingBlockPreview block;
 
 	public override void _Ready()
 	{
@@ -63,6 +62,7 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Process(double delta)
 	{
+		// Temporary code for 
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var cam = GetNode<Camera3D>("CameraTarget/SpringArm3D/Camera3D");
 		var mousePos = GetViewport().GetMousePosition();
@@ -73,7 +73,7 @@ public partial class Player : CharacterBody3D
 		var result = spaceState.IntersectRay(query);
 		if (result.Any())
 		{
-			block.GlobalPosition = (Vector3)result["position"];
+			blockPreview.GlobalPosition = (Vector3)result["position"];
 			Vector3 normal = (Vector3)result["normal"];
 			
 			Vector3 forward = Vector3.Forward;
@@ -87,9 +87,9 @@ public partial class Player : CharacterBody3D
 			forward = normal.Cross(right).Normalized();
 
 			Basis basis = new Basis(right, normal, forward);
-			Transform3D transform = block.Transform;
+			Transform3D transform = blockPreview.Transform;
 			transform.Basis = basis;
-			block.Transform = transform;
+			blockPreview.Transform = transform;
 		}
 
 		// Camera movement
@@ -136,7 +136,7 @@ public partial class Player : CharacterBody3D
 		}
 	}
 
-	public Vector2 GetInputDir()
+	public Vector2 GetMoveInputDir()
 	{
 		return Input.GetVector("move_left", "move_right", "move_forward", "move_back").LimitLength(1f);
 	}
@@ -163,10 +163,11 @@ public partial class Player : CharacterBody3D
 	{
 		float highestDot = 0f;
 		KinematicCollision3D bestColliion = null;
-		Vector2 inputDir = GetInputDir();
+		Vector2 inputDir = GetMoveInputDir();
 		Vector3 targetHorizontal = cameraTarget.Transform.Basis.Z * inputDir.Y + cameraTarget.Transform.Basis.X * inputDir.X;
 		targetHorizontal.Y = 0f;
 
+		// TODO: make magic numbers exposed variables (0.7 and 46)
 		for (int i = 0; i < GetSlideCollisionCount(); i++)
 		{
 			KinematicCollision3D collision = GetSlideCollision(i);
@@ -174,7 +175,7 @@ public partial class Player : CharacterBody3D
 				continue;
 			
 			float dot = targetHorizontal.Normalized().Dot(-collision.GetNormal().Normalized());
-			if (dot > 0.7f && dot > highestDot) // make 0.7 a variable in degrees
+			if (dot > 0.7f && dot > highestDot)
 			{
 				highestDot = dot;
 				bestColliion = collision;
