@@ -21,6 +21,7 @@ public partial class Player : CharacterBody3D
 	private float maxStamina = 100f;
 	private float stamina;
 	public bool isExhausted { get; private set; } = false;
+	[Export]
 	private float wheelVisibleTimer = 2f;
 
 	private StateMachine stateMachine;
@@ -29,7 +30,6 @@ public partial class Player : CharacterBody3D
 	private Node3D topChecksParent;
 	private Node3D botChecksParent;
 	private TextureProgressBar staminaWheel;
-	private PlayerMenu playerMenu;
 	private List<RayCast3D> wallChecks;
 
 	public override void _Ready()
