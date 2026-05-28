@@ -62,7 +62,8 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Process(double delta)
 	{
-		// Temporary code for 
+		// TODO: Clean and move this to a more appropriate place
+		// Move block preview to middle of screen
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var cam = GetNode<Camera3D>("CameraTarget/SpringArm3D/Camera3D");
 		var mousePos = GetViewport().GetMousePosition();
@@ -85,7 +86,6 @@ public partial class Player : CharacterBody3D
 			// Build orthonormal basis
 			Vector3 right = forward.Cross(normal).Normalized();
 			forward = normal.Cross(right).Normalized();
-
 			Basis basis = new Basis(right, normal, forward);
 			Transform3D transform = blockPreview.Transform;
 			transform.Basis = basis;
