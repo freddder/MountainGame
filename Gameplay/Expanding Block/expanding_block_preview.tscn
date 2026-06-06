@@ -6,6 +6,7 @@
 
 [node name="ExpandingBlockPreview" type="Node3D" unique_id=1269388242]
 script = ExtResource("1_frj4r")
+raycastCollisionMask = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=204655703]
 transform = Transform3D(0.24, 0, 0, 0, 3, 0, 0, 0, 0.24, 0, 0, 0)

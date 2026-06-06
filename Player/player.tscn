@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://pjj6k4pb8m8k" path="res://Player/Player.cs" id="1_fhl08"]
 [ext_resource type="Script" uid="uid://o75206vonm8g" path="res://State Machine/StateMachine.cs" id="2_fhl08"]
 [ext_resource type="Resource" uid="uid://ldu5iedw6n28" path="res://Player/Movement/ZeldaMovement.tres" id="2_vtle1"]
+[ext_resource type="Script" uid="uid://ca84388r3elmc" path="res://Gameplay/PowersManager.cs" id="3_00tjw"]
 [ext_resource type="Script" uid="uid://b0i81nhjt00d3" path="res://Player/Movement/PlayerGrounded.cs" id="3_vtle1"]
 [ext_resource type="Script" uid="uid://bs4q3vc8axfa1" path="res://Player/Movement/PlayerAirborne.cs" id="4_od3ui"]
+[ext_resource type="PackedScene" uid="uid://dso12aaw6quw0" path="res://Gameplay/Expanding Block/expanding_block_preview.tscn" id="4_x3vf3"]
 [ext_resource type="Script" uid="uid://beaqqw440rkhi" path="res://Player/Movement/PlayerClimb.cs" id="5_00tjw"]
 [ext_resource type="PackedScene" uid="uid://cnaeey6ymunui" path="res://UI/player_ui.tscn" id="6_yhcm3"]
 
@@ -117,6 +119,12 @@ shape = SubResource("SphereShape3D_u1kto")
 spring_length = 5.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraTarget/SpringArm3D" unique_id=1229232824]
+
+[node name="PowersManager" type="Node" parent="." unique_id=1471747795]
+script = ExtResource("3_00tjw")
+
+[node name="ExpandingBlockPreview" parent="PowersManager" unique_id=1269388242 instance=ExtResource("4_x3vf3")]
+visible = false
 
 [node name="StateMachine" type="Node" parent="." unique_id=90061192 node_paths=PackedStringArray("initialState")]
 script = ExtResource("2_fhl08")

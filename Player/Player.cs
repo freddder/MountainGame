@@ -7,8 +7,6 @@ public partial class Player : CharacterBody3D
 {
 	[Export]
 	public MovementSettings movementSettings { get; private set; }
-	[Export]
-	private ExpandingBlockPreview blockPreview;
 
 	[ExportGroup("Camera")]
 	[Export]
@@ -62,36 +60,6 @@ public partial class Player : CharacterBody3D
 	
 	public override void _Process(double delta)
 	{
-		// TODO: Clean and move this to a more appropriate place
-		// Move block preview to middle of screen
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var cam = GetNode<Camera3D>("CameraTarget/SpringArm3D/Camera3D");
-		var mousePos = GetViewport().GetMousePosition();
-
-		var origin = cam.ProjectRayOrigin(mousePos);
-		var end = origin + cam.ProjectRayNormal(mousePos) * 1000f;
-		var query = PhysicsRayQueryParameters3D.Create(origin, end, 2); // 2 = terrain layer
-		var result = spaceState.IntersectRay(query);
-		if (result.Any())
-		{
-			blockPreview.GlobalPosition = (Vector3)result["position"];
-			Vector3 normal = (Vector3)result["normal"];
-			
-			Vector3 forward = Vector3.Forward;
-			if (Mathf.Abs(normal.Dot(forward)) > 0.99f)
-			{
-    			forward = Vector3.Right; // fallback if too parallel
-			}
-
-			// Build orthonormal basis
-			Vector3 right = forward.Cross(normal).Normalized();
-			forward = normal.Cross(right).Normalized();
-			Basis basis = new Basis(right, normal, forward);
-			Transform3D transform = blockPreview.Transform;
-			transform.Basis = basis;
-			blockPreview.Transform = transform;
-		}
-
 		// Camera movement
 		cameraTarget.Position = Position + cameraTargetStartingPos;
 		Vector2 cameraStick = Input.GetVector("camera_left", "camera_right", "camera_forward", "camera_back");
