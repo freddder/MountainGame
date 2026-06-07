@@ -40,9 +40,9 @@ public partial class PlayerGrounded : State
 			return;
 		}
 
-		Vector2 inputDir = player.GetMoveInputDir();
-		isRunning = player.isExhausted ? false : Input.IsActionPressed("run") && inputDir != Vector2.Zero;
-		Vector3 targetHorizontalVelocity = new Vector3(inputDir.X, 0f, inputDir.Y).Rotated(Vector3.Up, cameraTarget.Rotation.Y);
+		Vector2 inputDir = player.MoveInputDir;
+		isRunning = player.isExhausted ? false : Input.IsActionPressed("run") && player.MoveInputDir != Vector2.Zero;
+		Vector3 targetHorizontalVelocity = player.GlobalMoveInputDir;
 		targetHorizontalVelocity *= isRunning ? ms.maxRunSpeed : ms.maxWalkSpeed;
 
 		if (inputDir != Vector2.Zero)

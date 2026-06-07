@@ -30,6 +30,20 @@ public partial class Player : CharacterBody3D
 	private TextureProgressBar staminaWheel;
 	private List<RayCast3D> wallChecks;
 
+	public Vector2 MoveInputDir 
+	{ 
+		get { return Input.GetVector("move_left", "move_right", "move_forward", "move_back").LimitLength(1f); } 
+	}
+
+	public Vector3 GlobalMoveInputDir 
+	{ 
+		get 
+		{
+			Vector2 inputDir = MoveInputDir;
+			return new Vector3(inputDir.X, 0f, inputDir.Y).Rotated(Vector3.Up, cameraTarget.Rotation.Y); 
+		} 
+	}
+
 	public override void _Ready()
 	{
 		stateMachine = GetNode<StateMachine>("StateMachine");
@@ -104,11 +118,6 @@ public partial class Player : CharacterBody3D
 		}
 	}
 
-	public Vector2 GetMoveInputDir()
-	{
-		return Input.GetVector("move_left", "move_right", "move_forward", "move_back").LimitLength(1f);
-	}
-
 	public Vector3 GetAverageWallCheckNormal()
 	{
 		int checkCount = 0;
@@ -131,8 +140,7 @@ public partial class Player : CharacterBody3D
 	{
 		float highestDot = 0f;
 		KinematicCollision3D bestColliion = null;
-		Vector2 inputDir = GetMoveInputDir();
-		Vector3 targetHorizontal = cameraTarget.Transform.Basis.Z * inputDir.Y + cameraTarget.Transform.Basis.X * inputDir.X;
+		Vector3 targetHorizontal = cameraTarget.Transform.Basis.Z * MoveInputDir.Y + cameraTarget.Transform.Basis.X * MoveInputDir.X;
 		targetHorizontal.Y = 0f;
 
 		// TODO: make magic numbers exposed variables (0.7 and 46)

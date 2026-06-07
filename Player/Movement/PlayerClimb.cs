@@ -49,7 +49,7 @@ public partial class PlayerClimb : State
 		}
 
 		// Movement
-		Vector2 inputDir = player.GetMoveInputDir();
+		Vector2 inputDir = player.MoveInputDir;
 		bool wantsToJump = Input.IsActionJustPressed("jump");
 		if (wantsToJump && !isJumping)
 		{

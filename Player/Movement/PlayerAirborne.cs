@@ -74,14 +74,12 @@ public partial class PlayerAirborne : State
 		Vector3 vel = player.Velocity;
 		if (isGliding)
 		{
-			Vector2 inputDir = player.GetMoveInputDir();
 			Vector3 targetHorizontalVelocity = Vector3.Zero;
 			Vector3 currHorizontalVelocity = player.Velocity;
 			currHorizontalVelocity.Y = 0f;
-			if (inputDir != Vector2.Zero)
+			if (player.MoveInputDir != Vector2.Zero)
 			{
-				targetHorizontalVelocity = new Vector3(inputDir.X, 0f, inputDir.Y).Rotated(Vector3.Up, cameraTarget.Rotation.Y);
-				targetHorizontalVelocity = targetHorizontalVelocity * ms.glideHorizontalSpeed;
+				targetHorizontalVelocity = player.GlobalMoveInputDir * ms.glideHorizontalSpeed;
 
 				float lookAngle = Mathf.Atan2(-targetHorizontalVelocity.X, -targetHorizontalVelocity.Z);
 				float rotY = Mathf.LerpAngle(player.Rotation.Y, lookAngle, ms.glideTurnAcceleration * (float)delta);
