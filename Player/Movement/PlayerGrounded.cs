@@ -43,7 +43,7 @@ public partial class PlayerGrounded : State
 		Vector2 inputDir = player.MoveInputDir;
 		isRunning = player.isExhausted ? false : Input.IsActionPressed("run") && player.MoveInputDir != Vector2.Zero;
 		Vector3 targetHorizontalVelocity = player.GlobalMoveInputDir;
-		targetHorizontalVelocity *= isRunning ? ms.maxRunSpeed : ms.maxWalkSpeed;
+		targetHorizontalVelocity *= isRunning ? ms.maxRunSpeed : ms.walkMaxSpeed;
 
 		if (inputDir != Vector2.Zero)
 		{
@@ -67,7 +67,7 @@ public partial class PlayerGrounded : State
 		if (wantsToJump || 
 			(collision != null && collision.GetNormal().Dot(targetHorizontalVelocity) < 0f))
 		{
-			verticalVelocity = 10f;
+			verticalVelocity = ms.jumpSpeed;
 		}
 
 		player.Velocity = new Vector3(horizontalVelocity.X, verticalVelocity, horizontalVelocity.Z);

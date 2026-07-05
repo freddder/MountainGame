@@ -55,7 +55,7 @@ public partial class PlayerClimb : State
 		{
 			isJumping = true;
 			Vector2 jumpHorizontalDir = new Vector2(normal.X, normal.Z).Normalized();
-			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * ms.jumpForce;
+			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * ms.climbJumpSpeed;
 			player.Velocity = jumpDir;
 			player.LookAt(player.GlobalPosition + normal);
 			EmitSignalChangeState("airborne");

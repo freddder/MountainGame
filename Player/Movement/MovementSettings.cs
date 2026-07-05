@@ -6,10 +6,12 @@ public partial class MovementSettings : Resource
 {
 	[ExportGroup("Grounded")]
 	[Export]
+	public float jumpSpeed = 10f;
+	[Export]
 	public float staminaRecoveryRate { get; private set; } = 25f ;
 	[ExportGroup("Grounded/Walking")]
 	[Export]
-	public float maxWalkSpeed { get; private set; } = 5f;
+	public float walkMaxSpeed { get; private set; } = 5f;
 	[Export]
 	public float walkTurnSpeed { get; private set; } = 7f;
 	[Export]
@@ -43,7 +45,7 @@ public partial class MovementSettings : Resource
 	[Export]
 	public float climbSpeed { get; private set; } = 3f;
 	[Export]
-	public float jumpForce { get; private set; } = 10f;
+	public float climbJumpSpeed { get; private set; } = 10f;
 	[Export]
 	public float climbStaminaReductionRate { get; private set; } = 16f;
 

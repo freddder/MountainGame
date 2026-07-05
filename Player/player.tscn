@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bs4q3vc8axfa1" path="res://Player/Movement/PlayerAirborne.cs" id="4_od3ui"]
 [ext_resource type="PackedScene" uid="uid://dso12aaw6quw0" path="res://Gameplay/Expanding Block/expanding_block_preview.tscn" id="4_x3vf3"]
 [ext_resource type="Script" uid="uid://beaqqw440rkhi" path="res://Player/Movement/PlayerClimb.cs" id="5_00tjw"]
+[ext_resource type="PackedScene" uid="uid://dqbo5ve7bujm6" path="res://Gameplay/Grappling Hook/grappling_hook.tscn" id="5_x3vf3"]
 [ext_resource type="PackedScene" uid="uid://cnaeey6ymunui" path="res://UI/player_ui.tscn" id="6_yhcm3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_r25e2"]
@@ -124,6 +125,9 @@ spring_length = 5.5
 script = ExtResource("3_00tjw")
 
 [node name="ExpandingBlockPreview" parent="PowersManager" unique_id=1269388242 instance=ExtResource("4_x3vf3")]
+visible = false
+
+[node name="GrapplingHook" parent="PowersManager" unique_id=2068354433 instance=ExtResource("5_x3vf3")]
 visible = false
 
 [node name="StateMachine" type="Node" parent="." unique_id=90061192 node_paths=PackedStringArray("initialState")]

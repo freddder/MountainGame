@@ -83,8 +83,7 @@ public partial class ExpandingBlockPreview : Power
 				n.Transform = Transform;
 				GetTree().Root.AddChild(n);
 
-				Visible = false;
-				isInUse = false;
+				ResetPower();
 
 				return true;
 			}
@@ -112,5 +111,11 @@ public partial class ExpandingBlockPreview : Power
 		}
 
 		return true;
+	}
+
+	public override void ResetPower()
+	{
+		Visible = false;
+		isInUse = false;
 	}
 }

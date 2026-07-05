@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://4wvwyli1pm5a" path="res://Player/player.tscn" id="1_614a4"]
 [ext_resource type="Texture2D" uid="uid://bbk5x2e0bkvji" path="res://checker_black_512x512.png" id="1_jsl4u"]
+[ext_resource type="Resource" uid="uid://njduqatgu55e" path="res://Player/Movement/Platforming.tres" id="2_05as6"]
 [ext_resource type="Material" uid="uid://bk1rm7ed43c4a" path="res://debug_material.tres" id="3_5fdu0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ln7vp"]
@@ -32,6 +33,7 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1378964869 instance=ExtResource("1_614a4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3642155, 0)
+movementSettings = ExtResource("2_05as6")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=476468161]
 use_collision = true

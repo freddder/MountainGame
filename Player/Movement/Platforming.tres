@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MovementSettings" format=3 uid="uid://njduqatgu55e"]
+
+[ext_resource type="Script" uid="uid://b3wwd64v3tqpp" path="res://Player/Movement/MovementSettings.cs" id="1_8abc7"]
+
+[resource]
+script = ExtResource("1_8abc7")
+jumpSpeed = 15.0
+metadata/_custom_type_script = "uid://b3wwd64v3tqpp"

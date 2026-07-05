@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dqbo5ve7bujm6"]
+
+[ext_resource type="Script" uid="uid://da0jsfo4drf4h" path="res://Gameplay/Grappling Hook/GrapplingHook.cs" id="1_ofjb8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ofjb8"]
+radius = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_0k8ae"]
+radius = 0.25
+height = 0.5
+radial_segments = 12
+rings = 12
+
+[node name="GrapplingHook" type="Node3D" unique_id=2068354433]
+script = ExtResource("1_ofjb8")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=176494147]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1443254800]
+shape = SubResource("SphereShape3D_ofjb8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=1461554268]
+mesh = SubResource("SphereMesh_0k8ae")
+skeleton = NodePath("../..")
+
+[connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]

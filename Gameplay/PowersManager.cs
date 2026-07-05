@@ -25,14 +25,14 @@ public partial class PowersManager : Node
 		if (powers.Count == 0)
 			return;
 
-		if (Input.IsActionJustPressed("change_power_left") && lastUsedPower != null && !lastUsedPower.isInUse)
+		if (Input.IsActionJustPressed("change_power_left") && (lastUsedPower == null || !lastUsedPower.isInUse))
 		{
 			currSelectedPowerIndex--;
 			if (currSelectedPowerIndex < 0)
 				currSelectedPowerIndex = powers.Count - 1;
 		}
 
-		if (Input.IsActionJustPressed("change_power_right") && lastUsedPower != null && !lastUsedPower.isInUse)
+		if (Input.IsActionJustPressed("change_power_right") && (lastUsedPower == null || !lastUsedPower.isInUse))
 		{
 			currSelectedPowerIndex++;
 			if (currSelectedPowerIndex >= powers.Count)
