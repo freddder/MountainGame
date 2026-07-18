@@ -71,7 +71,7 @@ public partial class GrapplingHook : Power
 
 		Vector3 dir = (grappleAttachPoint - player.GlobalPosition).Normalized();
 		Vector3 launch = dir.Slerp(Vector3.Up, 0.5f) * launchSpeed;
-		player.ChangeState("airborne");
+		player.ChangeState((int)Player.MovementStates.AIRBORNE);
 
 		player.Velocity = launch;
 	}

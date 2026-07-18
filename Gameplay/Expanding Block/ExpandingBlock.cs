@@ -51,7 +51,7 @@ public partial class ExpandingBlock : AnimatableBody3D
 				{
 					if (node is Player player && player.GetCurrentState() is not PlayerClimb)
 					{
-						player.ChangeState("airborne");
+						player.ChangeState((int)Player.MovementStates.AIRBORNE);
 						player.Velocity = Transform.Basis.Y * launchSpeed;
 					}
 				}

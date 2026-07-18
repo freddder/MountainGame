@@ -1,46 +1,38 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class StateMachine : Node
+public class StateMachine
 {
-	[Export]
-	private State initialState = null;
 	public State currState { get; private set; } = null;
-	private Dictionary<string, State> states;
+	private List<State> states;
 
-	public override void _Ready()
+	public StateMachine()
 	{
-		states = new Dictionary<string, State>();
-		foreach (Node child in GetChildren())
-		{
-			if (child is State state)
-			{
-				states.Add(child.Name.ToString().ToLower(), state);
-				state.ChangeState += ChangeState;
-			}
-		}
-
-		if (initialState != null)
-		{
-			currState = initialState;
-			initialState.Enter();
-		}
+		states = new List<State>();
 	}
 
-	public void ChangeState(string newStateName)
+	public void AddState(State newState, bool isDefaultState = false)
 	{
-		if (!states.ContainsKey(newStateName))
-			return;
+		states.Add(newState);
 
+		if (isDefaultState)
+			ChangeState(states.Count - 1);			
+	}
+
+	public void ChangeState(int newStateIndex)
+	{
+		if (newStateIndex < 0 || newStateIndex >= states.Count)
+			return;
+	
 		if (currState != null)
 		{
 			currState.Exit();
 		}
-		currState = states[newStateName];
+		currState = states[newStateIndex];
 		currState.Enter();
 	}
 
-	public override void _Process(double delta)
+	public void Update(double delta)
 	{
 		if (currState != null)
 		{
@@ -48,7 +40,7 @@ public partial class StateMachine : Node
 		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+	public void PhysicsUpdte(double delta)
 	{
 		if (currState != null)
 		{

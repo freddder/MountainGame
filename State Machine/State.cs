@@ -1,10 +1,19 @@
 using Godot;
 using System;
 
-public abstract partial class State : Node
+public abstract partial class State
 {
-	[Signal]
-	public delegate void ChangeStateEventHandler(string newState);
+	protected StateMachine stateMachine;
+
+	public State(StateMachine sm)
+	{
+		stateMachine = sm;
+	}
+
+	public void ChangeState(int newState)
+	{
+		stateMachine.ChangeState(newState);
+	}
 
 	public abstract void Enter();
 	public abstract void Exit();

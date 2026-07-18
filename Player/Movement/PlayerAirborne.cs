@@ -4,21 +4,16 @@ using System;
 public partial class PlayerAirborne : State
 {
 	private bool isGliding = false;
-	private float glideTurnSpeed = 0f;
 	private bool isGlideActionBuffered = false;
 	private float glideActionBufferTimer = 0.3f;
 
 	private Player player;
-	private Node3D cameraTarget;
-	private MeshInstance3D wings;
 
 	private MovementSettings ms { get { return player.movementSettings; } }
 
-	public override void _Ready()
+	public PlayerAirborne(StateMachine sm, Player _player) : base(sm)
 	{
-		player = GetNode<Player>("../..");
-		cameraTarget = GetNode<Node3D>("../../CameraTarget");
-		wings = GetNode<MeshInstance3D>("../../Mesh/Wings");
+		player = _player;
 	}
 
 	public override void Enter()
@@ -29,7 +24,7 @@ public partial class PlayerAirborne : State
 	{
 		isGliding = false;
 		isGlideActionBuffered = false;
-		wings.Visible = false;
+		player.DisableWings();
 		ResetGlideActionBuffer();
 	}
 
@@ -41,14 +36,14 @@ public partial class PlayerAirborne : State
 	{
 		if (player.IsOnFloor() && player.Velocity.Y <= 0f)
 		{
-			EmitSignalChangeState("grounded");
+			ChangeState((int)Player.MovementStates.GROUNDED);
 			return;
 		}
 
 		KinematicCollision3D collision = player.GetBestWallCollision();
 		if (collision != null && player.Velocity.Y < 0f && !player.isExhausted)
 		{
-			EmitSignalChangeState("climb");
+			ChangeState((int)Player.MovementStates.CLIMB);
 			return;
 		}
 
@@ -113,7 +108,7 @@ public partial class PlayerAirborne : State
 	private void ToggleGliding()
 	{
 		isGliding = !isGliding;
-		wings.Visible = !wings.Visible;
+		player.ToggleWings();
 		ResetGlideActionBuffer();
 	}
 }

@@ -5,6 +5,14 @@ using System.Linq;
 
 public partial class Player : CharacterBody3D
 {
+	public enum MovementStates
+	{
+		GROUNDED,
+		AIRBORNE,
+		CLIMB,
+		ENUM_COUNT
+	}
+
 	[Export]
 	public MovementSettings movementSettings { get; private set; }
 
@@ -27,6 +35,7 @@ public partial class Player : CharacterBody3D
 	private Vector3 cameraTargetStartingPos;
 	private Node3D topChecksParent;
 	private Node3D botChecksParent;
+	private MeshInstance3D wings;
 	private TextureProgressBar staminaWheel;
 	private List<RayCast3D> wallChecks;
 
@@ -46,12 +55,18 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		stateMachine = GetNode<StateMachine>("StateMachine");
 		cameraTarget = GetNode<Node3D>("CameraTarget");
 		topChecksParent = GetNode<Node3D>("Mesh/UpperChecks");
 		botChecksParent = GetNode<Node3D>("Mesh/BottomChecks");
+		wings = GetNode<MeshInstance3D>("Mesh/Wings");
 		staminaWheel = GetNode<TextureProgressBar>("PlayerUi/StaminaWheel");
 		wallChecks = new List<RayCast3D>();
+
+		// State creation needs to match enum order
+		stateMachine = new StateMachine();
+		stateMachine.AddState(new PlayerGrounded(stateMachine, this));
+		stateMachine.AddState(new PlayerAirborne(stateMachine, this), true);
+		stateMachine.AddState(new PlayerClimb(stateMachine, this));
 
 		cameraTargetStartingPos = cameraTarget.Position;
 		stamina = maxStamina;
@@ -99,10 +114,15 @@ public partial class Player : CharacterBody3D
 		{
 			staminaWheel.Visible = true;
 		}
+
+		// Movement
+		stateMachine.Update(delta);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		stateMachine.PhysicsUpdte(delta);
+
 		MoveAndSlide();
 	}
 
@@ -178,7 +198,7 @@ public partial class Player : CharacterBody3D
 		staminaWheel.Value = stamina;
 	}
 
-	public void ChangeState(string newState)
+	public void ChangeState(int newState)
 	{
 		stateMachine.ChangeState(newState);
 	}
@@ -186,5 +206,15 @@ public partial class Player : CharacterBody3D
 	public State GetCurrentState()
 	{
 		return stateMachine.currState;
+	}
+
+	public void ToggleWings()
+	{
+		wings.Visible = !wings.Visible;
+	}
+
+	public void DisableWings()
+	{
+		wings.Visible = false;
 	}
 }

@@ -6,37 +6,27 @@ public partial class PlayerGrounded : State
 	private bool isRunning = false;
 
 	private Player player;
-	private Node3D cameraTarget;
-	private MeshInstance3D debugSphere;
 
 	private MovementSettings ms { get { return player.movementSettings; } }
 
-	public override void _Ready()
+	public PlayerGrounded(StateMachine sm, Player _player) : base(sm)
 	{
-		player = GetNode<Player>("../..");
-		cameraTarget = GetNode<Node3D>("../../CameraTarget");
-		debugSphere = GetNode<MeshInstance3D>("../../Mesh/DebugSphere");
+		player = _player;
 	}
-
 
 	public override void Enter()
 	{
-		//Vector3 lookPos = player.GlobalPosition + player.Velocity;
-		//lookPos.Y = player.GlobalPosition.Y;
-		//mesh.LookAt(lookPos);
-		//collisionShape.LookAt(lookPos);
 	}
 
 	public override void Exit()
-	{
-		
+	{		
 	}
 
 	public override void PhysicsUpdate(double delta)
 	{
 		if (!player.IsOnFloor())
 		{
-			EmitSignalChangeState("airborne");
+			ChangeState((int)Player.MovementStates.AIRBORNE);
 			return;
 		}
 

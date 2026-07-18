@@ -6,14 +6,12 @@ public partial class PlayerClimb : State
 	private bool isJumping = false;
 
 	private Player player;
-	private Node3D debugSphere;
 
 	private MovementSettings ms { get { return player.movementSettings; } }
 
-	public override void _Ready()
+	public PlayerClimb(StateMachine sm, Player _player) : base(sm)
 	{
-		player = GetNode<Player>("../..");
-		debugSphere = GetNode<Node3D>("../../Mesh/DebugSphere");
+		player = _player;
 	}
 
 	public override void Enter()
@@ -24,7 +22,6 @@ public partial class PlayerClimb : State
 	public override void Exit()
 	{
 		isJumping = false;
-		debugSphere.GlobalPosition = player.GlobalPosition;
 		player.Rotation = new Vector3(0f, player.Rotation.Y, player.Rotation.Z);
 	}
 
@@ -36,7 +33,7 @@ public partial class PlayerClimb : State
 	{
 		if (player.IsOnFloor())
 		{
-			EmitSignalChangeState("grounded");
+			ChangeState((int)Player.MovementStates.GROUNDED);
 			return;
 		}
 
@@ -44,7 +41,7 @@ public partial class PlayerClimb : State
 		float dot = normal.Dot(Vector3.Up);
 		if (normal == Vector3.Zero || player.isExhausted || Mathf.Abs(dot) > 0.75f)
 		{
-			EmitSignalChangeState("airborne");
+			ChangeState((int)Player.MovementStates.AIRBORNE);
 			return;
 		}
 
@@ -58,7 +55,7 @@ public partial class PlayerClimb : State
 			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * ms.climbJumpSpeed;
 			player.Velocity = jumpDir;
 			player.LookAt(player.GlobalPosition + normal);
-			EmitSignalChangeState("airborne");
+			ChangeState((int)Player.MovementStates.AIRBORNE);
 			return;
 		}
 
@@ -79,7 +76,5 @@ public partial class PlayerClimb : State
 		{
 			player.Velocity = Vector3.Zero;
 		}
-
-		// debug_sphere.global_position = body.global_position + normal.normalized() * 3.0
 	}
 }
