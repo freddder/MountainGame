@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://4wvwyli1pm5a"]
 
 [ext_resource type="Script" uid="uid://pjj6k4pb8m8k" path="res://Player/Player.cs" id="1_fhl08"]
-[ext_resource type="Script" uid="uid://o75206vonm8g" path="res://State Machine/StateMachine.cs" id="2_fhl08"]
 [ext_resource type="Resource" uid="uid://ldu5iedw6n28" path="res://Player/Movement/ZeldaMovement.tres" id="2_vtle1"]
 [ext_resource type="Script" uid="uid://ca84388r3elmc" path="res://Gameplay/PowersManager.cs" id="3_00tjw"]
-[ext_resource type="Script" uid="uid://b0i81nhjt00d3" path="res://Player/Movement/PlayerGrounded.cs" id="3_vtle1"]
-[ext_resource type="Script" uid="uid://bs4q3vc8axfa1" path="res://Player/Movement/PlayerAirborne.cs" id="4_od3ui"]
 [ext_resource type="PackedScene" uid="uid://dso12aaw6quw0" path="res://Gameplay/Expanding Block/expanding_block_preview.tscn" id="4_x3vf3"]
-[ext_resource type="Script" uid="uid://beaqqw440rkhi" path="res://Player/Movement/PlayerClimb.cs" id="5_00tjw"]
 [ext_resource type="PackedScene" uid="uid://dqbo5ve7bujm6" path="res://Gameplay/Grappling Hook/grappling_hook.tscn" id="5_x3vf3"]
 [ext_resource type="PackedScene" uid="uid://cnaeey6ymunui" path="res://UI/player_ui.tscn" id="6_yhcm3"]
 
@@ -44,6 +40,7 @@ mesh = SubResource("PrismMesh_8a52o")
 skeleton = NodePath("../..")
 
 [node name="Wings" type="MeshInstance3D" parent="Mesh" unique_id=1698873880]
+unique_name_in_owner = true
 transform = Transform3D(2.74403, 0, 0, 0, 0.0786891, 0, 0, 0, 0.602709, 0, 0.417921, 0)
 visible = false
 mesh = SubResource("BoxMesh_y2vgn")
@@ -54,6 +51,7 @@ mesh = SubResource("SphereMesh_02nkx")
 surface_material_override/0 = SubResource("StandardMaterial3D_wbsip")
 
 [node name="UpperChecks" type="Node3D" parent="Mesh" unique_id=582268057]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.496725, 0)
 
 [node name="Front" type="RayCast3D" parent="Mesh/UpperChecks" unique_id=1359770599]
@@ -81,6 +79,7 @@ target_position = Vector3(0, 0, -1)
 collision_mask = 2
 
 [node name="BottomChecks" type="Node3D" parent="Mesh" unique_id=2045363145]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00268364, -0.765419, -0.00119472)
 
 [node name="Front" type="RayCast3D" parent="Mesh/BottomChecks" unique_id=1977828287]
@@ -111,6 +110,7 @@ collision_mask = 2
 shape = SubResource("CapsuleShape3D_4lit3")
 
 [node name="CameraTarget" type="Node3D" parent="." unique_id=532883073]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.99961, -0.0279216, 0, 0.0279216, 0.99961, 0, 1.2427222, 0)
 top_level = true
 
@@ -129,18 +129,5 @@ visible = false
 
 [node name="GrapplingHook" parent="PowersManager" unique_id=2068354433 instance=ExtResource("5_x3vf3")]
 visible = false
-
-[node name="StateMachine" type="Node" parent="." unique_id=90061192 node_paths=PackedStringArray("initialState")]
-script = ExtResource("2_fhl08")
-initialState = NodePath("Airborne")
-
-[node name="Grounded" type="Node" parent="StateMachine" unique_id=1649861354]
-script = ExtResource("3_vtle1")
-
-[node name="Airborne" type="Node" parent="StateMachine" unique_id=1682010948]
-script = ExtResource("4_od3ui")
-
-[node name="Climb" type="Node" parent="StateMachine" unique_id=1168449210]
-script = ExtResource("5_00tjw")
 
 [node name="PlayerUi" parent="." unique_id=2094079023 instance=ExtResource("6_yhcm3")]

@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class Player : CharacterBody3D
 {
@@ -10,6 +9,7 @@ public partial class Player : CharacterBody3D
 		GROUNDED,
 		AIRBORNE,
 		CLIMB,
+		HOVER,
 		ENUM_COUNT
 	}
 
@@ -55,10 +55,10 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		cameraTarget = GetNode<Node3D>("CameraTarget");
-		topChecksParent = GetNode<Node3D>("Mesh/UpperChecks");
-		botChecksParent = GetNode<Node3D>("Mesh/BottomChecks");
-		wings = GetNode<MeshInstance3D>("Mesh/Wings");
+		cameraTarget = GetNode<Node3D>("%CameraTarget");
+		topChecksParent = GetNode<Node3D>("%UpperChecks");
+		botChecksParent = GetNode<Node3D>("%BottomChecks");
+		wings = GetNode<MeshInstance3D>("%Wings");
 		staminaWheel = GetNode<TextureProgressBar>("PlayerUi/StaminaWheel");
 		wallChecks = new List<RayCast3D>();
 
@@ -67,6 +67,7 @@ public partial class Player : CharacterBody3D
 		stateMachine.AddState(new PlayerGrounded(stateMachine, this));
 		stateMachine.AddState(new PlayerAirborne(stateMachine, this), true);
 		stateMachine.AddState(new PlayerClimb(stateMachine, this));
+		stateMachine.AddState(new PlayerHover(stateMachine, this));
 
 		cameraTargetStartingPos = cameraTarget.Position;
 		stamina = maxStamina;

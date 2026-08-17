@@ -12,6 +12,7 @@ public partial class GrapplingHook : Power
 
 	private Vector3 grappleStartDir = Vector3.Zero;
 	private Vector3 grappleAttachPoint;
+	private bool hasUsed = false;
 
 	private Area3D area;
 	private Player player;
@@ -24,20 +25,28 @@ public partial class GrapplingHook : Power
 
 	public override void _Process(double delta)
 	{
-		if (!isInUse) return;
-
-		GlobalPosition += grappleStartDir * grappleSpeed * (float)delta;
-		if ((GlobalPosition - player.GlobalPosition).Length() >= grappleDistance)
+		if (player.IsOnFloor())
 		{
-			ResetPower();
+			hasUsed = false;
+		}
+
+		if (isInUse) 
+		{
+			GlobalPosition += grappleStartDir * grappleSpeed * (float)delta;
+			if ((GlobalPosition - player.GlobalPosition).Length() >= grappleDistance)
+			{
+				ResetPower();
+			}
 		}
 	}
 
 	public override bool UsePower()
 	{
-		if (isInUse) return false;
+		if (isInUse || hasUsed) return false;
 
 		isInUse = true;
+		hasUsed = true;
+		player.ChangeState((int)Player.MovementStates.HOVER);
 
 		GlobalPosition = player.GlobalPosition;
 		area.SetDeferred("monitoring", true);
@@ -54,8 +63,9 @@ public partial class GrapplingHook : Power
 
 	public override void ResetPower()
 	{
-		isInUse = false;
+		player.ChangeState((int)Player.MovementStates.AIRBORNE);
 
+		isInUse = false;
 		GlobalPosition = player.GlobalPosition;
 		area.SetDeferred("monitoring", false);
 		area.SetDeferred("monitorable", false);
@@ -74,5 +84,6 @@ public partial class GrapplingHook : Power
 		player.ChangeState((int)Player.MovementStates.AIRBORNE);
 
 		player.Velocity = launch;
+		player.LookAt(player.GlobalPosition + new Vector3(launch.X, 0f, launch.Z));
 	}
 }

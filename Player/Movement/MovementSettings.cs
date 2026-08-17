@@ -8,7 +8,7 @@ public partial class MovementSettings : Resource
 	[Export]
 	public float jumpSpeed = 10f;
 	[Export]
-	public float staminaRecoveryRate { get; private set; } = 25f ;
+	public float staminaRecoveryRate { get; private set; } = 25f;
 	[ExportGroup("Grounded/Walking")]
 	[Export]
 	public float walkMaxSpeed { get; private set; } = 5f;
@@ -48,6 +48,11 @@ public partial class MovementSettings : Resource
 	public float climbJumpSpeed { get; private set; } = 10f;
 	[Export]
 	public float climbStaminaReductionRate { get; private set; } = 16f;
+
+	[ExportGroup("Hover")]
+	[Export]
+	//public float hoverVelocityReductionRate { get; private set; } = 5f;
+	public float hoverStopTime { get; private set; } = 0.3f;
 
 	public MovementSettings() {}
 }

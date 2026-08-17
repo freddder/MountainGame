@@ -15,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_kwigr")
 
 [node name="StaminaWheel" type="TextureProgressBar" parent="." unique_id=567516323]
+unique_name_in_owner = true
 modulate = Color(0, 0.815686, 0, 1)
 texture_filter = 2
 layout_mode = 1
