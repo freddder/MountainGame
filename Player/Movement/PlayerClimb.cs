@@ -33,7 +33,7 @@ public partial class PlayerClimb : State
 	{
 		if (player.IsOnFloor())
 		{
-			ChangeState((int)Player.MovementStates.GROUNDED);
+			ChangeState((int)Player.MovementState.GROUNDED);
 			return;
 		}
 
@@ -41,7 +41,7 @@ public partial class PlayerClimb : State
 		float dot = normal.Dot(Vector3.Up);
 		if (normal == Vector3.Zero || player.isExhausted || Mathf.Abs(dot) > 0.75f)
 		{
-			ChangeState((int)Player.MovementStates.AIRBORNE);
+			ChangeState((int)Player.MovementState.AIRBORNE);
 			return;
 		}
 
@@ -55,7 +55,7 @@ public partial class PlayerClimb : State
 			Vector3 jumpDir = new Vector3(jumpHorizontalDir.X, 1f, jumpHorizontalDir.Y) * ms.climbJumpSpeed;
 			player.Velocity = jumpDir;
 			player.LookAt(player.GlobalPosition + normal);
-			ChangeState((int)Player.MovementStates.AIRBORNE);
+			ChangeState((int)Player.MovementState.AIRBORNE);
 			return;
 		}
 

@@ -36,14 +36,14 @@ public partial class PlayerAirborne : State
 	{
 		if (player.IsOnFloor() && player.Velocity.Y <= 0f)
 		{
-			ChangeState((int)Player.MovementStates.GROUNDED);
+			ChangeState((int)Player.MovementState.GROUNDED);
 			return;
 		}
 
 		KinematicCollision3D collision = player.GetBestWallCollision();
 		if (collision != null && player.Velocity.Y < 0f && !player.isExhausted)
 		{
-			ChangeState((int)Player.MovementStates.CLIMB);
+			ChangeState((int)Player.MovementState.CLIMB);
 			return;
 		}
 

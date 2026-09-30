@@ -16,7 +16,7 @@ public class StateMachine
 		states.Add(newState);
 
 		if (isDefaultState)
-			ChangeState(states.Count - 1);			
+			ChangeState(states.Count - 1);
 	}
 
 	public void ChangeState(int newStateIndex)

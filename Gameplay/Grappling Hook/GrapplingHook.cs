@@ -46,7 +46,7 @@ public partial class GrapplingHook : Power
 
 		isInUse = true;
 		hasUsed = true;
-		player.ChangeState((int)Player.MovementStates.HOVER);
+		player.ChangeState((int)Player.MovementState.HOVER);
 
 		GlobalPosition = player.GlobalPosition;
 		area.SetDeferred("monitoring", true);
@@ -63,7 +63,7 @@ public partial class GrapplingHook : Power
 
 	public override void ResetPower()
 	{
-		player.ChangeState((int)Player.MovementStates.AIRBORNE);
+		player.ChangeState((int)Player.MovementState.AIRBORNE);
 
 		isInUse = false;
 		GlobalPosition = player.GlobalPosition;
@@ -81,7 +81,7 @@ public partial class GrapplingHook : Power
 
 		Vector3 dir = (grappleAttachPoint - player.GlobalPosition).Normalized();
 		Vector3 launch = dir.Slerp(Vector3.Up, 0.5f) * launchSpeed;
-		player.ChangeState((int)Player.MovementStates.AIRBORNE);
+		player.ChangeState((int)Player.MovementState.AIRBORNE);
 
 		player.Velocity = launch;
 		player.LookAt(player.GlobalPosition + new Vector3(launch.X, 0f, launch.Z));

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class Player : CharacterBody3D
 {
-	public enum MovementStates
+	public enum MovementState
 	{
 		GROUNDED,
 		AIRBORNE,

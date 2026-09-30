@@ -26,7 +26,7 @@ public partial class PlayerGrounded : State
 	{
 		if (!player.IsOnFloor())
 		{
-			ChangeState((int)Player.MovementStates.AIRBORNE);
+			ChangeState((int)Player.MovementState.AIRBORNE);
 			return;
 		}
 
