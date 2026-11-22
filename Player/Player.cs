@@ -209,6 +209,11 @@ public partial class Player : CharacterBody3D
 		return stateMachine.currState;
 	}
 
+	public bool IsGliding()
+	{
+		return GetCurrentState() is PlayerAirborne airborne && airborne.isGliding;
+	}
+
 	public void ToggleWings()
 	{
 		wings.Visible = !wings.Visible;

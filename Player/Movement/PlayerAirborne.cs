@@ -3,7 +3,7 @@ using System;
 
 public partial class PlayerAirborne : State
 {
-	private bool isGliding = false;
+	public bool isGliding { get; private set; } = false;
 	private bool isGlideActionBuffered = false;
 	private float glideActionBufferTimer = 0.3f;
 
